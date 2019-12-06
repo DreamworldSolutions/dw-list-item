@@ -68,6 +68,7 @@ npm install --save @dreamworld/dw-list-item
 | Name  | Description |
 | ----  | ----------- |
 | --dw-list-item-hover-background | Background color of the hovered item  |
+| --dw-list-item-active-background | Background color of the actived item  |
 | --dw-list-item-selected-background | Background color of the selected item  |
 | --dw-list-item-selected-focused-background | Background color of the selected focused item |
 | --dw-list-item-disabled-background | Background color of the disabled item |
