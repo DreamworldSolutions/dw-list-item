@@ -19,7 +19,7 @@ import { alignment } from '@dreamworld/flex-layout/flex-layout-alignment';
 import { Typography } from '@dreamworld/material-styles/typography';
 import { factors } from '@dreamworld/flex-layout/flex-layout-factors';
 
-export class DwListItem extends LitElement {
+export class DwListItem extends LitElement { 
   static get styles() {
     return [
       flexLayout,
