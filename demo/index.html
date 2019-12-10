@@ -14,11 +14,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <title>dw-list-item demo</title>
-    <script type="module" src="./dw-list-item-demo.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script type="module" src="../dw-list-item.js"></script>
+    <style>
+      body{
+        font-family: Roboto;
+      }
+    </style>
   </head>
 
   <body>
-    <dw-list-item-demo></dw-list-item-demo>
+    <h3>Basic</h3>
+    <dw-list-item active title1="Item 1"></dw-list-item>
+
+    <dw-list-item active selected title1="Item 1"></dw-list-item>
+
+    <h3>Two line</h3>
+    <dw-list-item selected title1="Main title" title2="Sub title" twoLine></dw-list-item>
+
+    <h3>With leading icon</h3>
+    <dw-list-item selected title1="Item 1" leadingIcon="favorite"></dw-list-item>
+
+    <h3>With trailing icon</h3>
+    <dw-list-item title1="Item 1" trailingIcon="done"></dw-list-item>
+
+    <h3>dense</h3>
+    <dw-list-item title1="Item 1" dense></dw-list-item>
+    <dw-list-item title1="Item 1" dense selected></dw-list-item>
+    <dw-list-item title1="Item 1" dense active></dw-list-item>
+    <dw-list-item title1="Item 1" dense active selected></dw-list-item>
+    <dw-list-item title1="Item 1" dense leadingIcon="favorite" trailingIcon="done"></dw-list-item>
+
+    <h3>Disabled</h3>
+    <dw-list-item title1="Item 1" disabled></dw-list-item>
+    <dw-list-item title1="Item 1" disabled selected></dw-list-item>
+    <dw-list-item title1="Item 1" disabled active></dw-list-item>
+    <dw-list-item title1="Item 1" disabled leadingIcon="favorite" trailingIcon="favorite"></dw-list-item>
   </body>
   
 </html>

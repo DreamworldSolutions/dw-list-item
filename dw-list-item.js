@@ -27,6 +27,14 @@ export class DwListItem extends LitElement {
       Typography,
       factors,
       css`
+        :host{
+          display: block;
+        }
+
+        :host([hidden]){
+          display: none;
+        }
+
         .ellipses{
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -36,10 +44,18 @@ export class DwListItem extends LitElement {
         .mdc-list-item {
           height: 48px;
           position: relative;
-          justify-content: flex-start;
           padding: 0 16px;
           overflow: hidden;
           outline: none;
+        }
+
+        :host([selected]) .mdc-list-item,
+        :host([active]) .mdc-list-item,
+        :host([selected]) .mdc-list-item .mdc-list-item__graphic,
+        :host([active]) .mdc-list-item .mdc-list-item__graphic {
+          color: var(--mdc-theme-primary, #6200ee);
+          /* Used by dw-ripple */
+          --mdc-theme-on-surface: var(--mdc-theme-primary, #6200ee);
         }
 
         .mdc-list-item__graphic {
@@ -49,175 +65,80 @@ export class DwListItem extends LitElement {
           margin-right: 32px;
           /* width: 24px;
           height: 24px; */
-          flex-shrink: 0;
-          fill: currentColor;
         }
 
-        .mdc-list-item--selected,
-        .mdc-list-item--activated,
-        .mdc-list-item--selected .mdc-list-item__graphic,
-        .mdc-list-item--activated .mdc-list-item__graphic {
-          color: var(--mdc-theme-primary, #6200ee);
-        }
-
-        .mdc-list-item--disabled .mdc-list-item__text {
-          opacity: 0.38;
-          color: var(--mdc-theme-text-disabled, #000);
-        }
-
-        .mdc-list-item__primary-text {
-          display: block;
-          margin-top: 0;
-          line-height: normal;
-          display: block;
-        }
-
-        .mdc-list--dense .mdc-list-item__primary-text {
-          display: block;
-          margin-top: 0;
-          line-height: normal;
-          margin-bottom: -20px;
+        .mdc-list-item__graphic.trailing-icon,
+        :host([dense]) .mdc-list-item__graphic.trailing-icon{
+          margin-right: 0;
         }
 
         .mdc-list-item__secondary-text {
           color: var(--mdc-theme-text-secondary, rgba(0, 0, 0, 0.54));
-          font-family: Roboto, sans-serif;
-          -moz-osx-font-smoothing: grayscale;
-          -webkit-font-smoothing: antialiased;
-          font-size: 0.875rem;
-          line-height: 1.25rem;
-          font-weight: 400;
-          letter-spacing: 0.0178571429em;
-          text-decoration: inherit;
-          text-transform: inherit;
-          display: block;
-          margin-top: 0;
-          line-height: normal;
-          display: block;
         }
 
-        .mdc-list--dense .mdc-list-item__secondary-text {
-          display: block;
-          margin-top: 0;
-          line-height: normal;
-          font-size: inherit;
+        :host(:not([disabled])) .mdc-list-item::before{
+          content: "";
+          opacity: 0;
+          pointer-events: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #000;
+          transition: opacity 15ms linear, background-color 15ms linear;
+          z-index: 1;
         }
 
-        .mdc-list--dense .mdc-list-item {
+        :host(:not([disabled])) .mdc-list-item:hover::before {
+          opacity: 0.04;
+        }
+
+        :host(:not([disabled])[active]) .mdc-list-item::before {
+          opacity: 0.12;
+          background-color: var(--mdc-theme-primary, #6200ee);
+        }
+
+        :host(:not([disabled])[active][selected]) .mdc-list-item::before{
+          opacity: 0.24;
+        }
+
+        :host(:not([disabled])[active]) .mdc-list-item:hover::before {
+          opacity: 0.16;
+        }
+
+        :host(:not([disabled])[selected]) .mdc-list-item::before {
+          opacity: 0.08;
+          background-color: var(--mdc-theme-primary, #6200ee);
+        }
+
+        :host(:not([disabled])[selected]) .mdc-list-item:hover::before {
+          opacity: 0.12;
+        }
+
+        :host([disabled]) .mdc-list-item__text {
+          opacity: 0.38;
+          color: var(--mdc-theme-text-disabled, #000);
+        }
+
+        :host([dense]) .mdc-list-item {
           height: 40px;
         }
 
-        .mdc-list--dense .mdc-list-item__graphic {
+        :host([dense]) .mdc-list-item__graphic {
           margin-left: 0;
           margin-right: 36px;
           width: 20px;
           height: 20px;
         }
 
-
-        .mdc-list--avatar-list .mdc-list-item {
-          height: 56px;
-        }
-
-        .mdc-list--avatar-list .mdc-list-item__graphic {
-          margin-left: 0;
-          margin-right: 16px;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-        }
-
-        .mdc-list--two-line .mdc-list-item__text {
-          align-self: flex-start;
-        }
-
-        .mdc-list--two-line .mdc-list-item {
+        :host([twoline]) .mdc-list-item {
           height: 72px;
         }
 
-        .mdc-list--two-line.mdc-list--dense .mdc-list-item,
-        .mdc-list--avatar-list.mdc-list--dense .mdc-list-item {
+        :host([twoline]).mdc-list--dense .mdc-list-item {
           height: 60px;
         }
-
-        .mdc-list--avatar-list.mdc-list--dense .mdc-list-item__graphic {
-          margin-left: 0;
-          margin-right: 20px;
-          width: 36px;
-          height: 36px;
-        }
-
-
-        :not(.mdc-list-item--disabled).mdc-list-item::before{
-          position: absolute;
-          border-radius: 50%;
-          opacity: 0;
-          pointer-events: none;
-          content: "";
-          top: calc(50% - 100%);
-          left: calc(50% - 100%);
-          width: 200%;
-          height: 200%;
-          background-color: #000;
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item::before {
-          transition: opacity 15ms linear, background-color 15ms linear;
-          z-index: 1;
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item:hover::before {
-          opacity: 0.04;
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--activated{
-          --mdc-theme-on-surface: red;
-
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--activated::before {
-          opacity: 0.12;
-        }
-
-
-        :not(.mdc-list-item--disabled).mdc-list-item--activated::before{
-          background-color: var(--mdc-theme-primary, #6200ee);
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--activated:hover::before {
-          opacity: 0.16;
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--selected::before {
-          opacity: 0.08;
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--selected::before{
-          background-color: var(--mdc-theme-primary, #6200ee);
-        }
-
-        :not(.mdc-list-item--disabled).mdc-list-item--selected:hover::before {
-          opacity: 0.12;
-        }
-
-        .mdc-list-item--disabled::before{
-          position: absolute;
-          border-radius: 50%;
-          opacity: 0;
-          pointer-events: none;
-          content: "";
-          top: calc(50% - 100%);
-          left: calc(50% - 100%);
-          width: 200%;
-          height: 200%;
-          background-color: #000;
-        }
-
-        .mdc-list-item--disabled::before {
-          transition: opacity 15ms linear, background-color 15ms linear;
-          z-index: 1;
-        }
-
       `
     ];
   }
@@ -256,7 +177,7 @@ export class DwListItem extends LitElement {
       /**
        * Set to true to show twoLine item
        */
-      twoLine: { type: Boolean, reflect: true },
+      twoLine: { type: Boolean, reflect: true},
 
        /**
        * Shows disabled style when true
@@ -275,16 +196,22 @@ export class DwListItem extends LitElement {
 
   render() {
     return html`
-    <div class="mdc-list-item layout horizontal center" tabindex="0">
-      <dw-ripple></dw-ripple>
-      ${this.leadingIcon ? this._leadingIconTemplate() : ''}
-      <span class="mdc-list-item__text layout vertical flex ellipses">
-        <span class="mdc-list-item__primary-text ellipses">Two-line item</span>
-        ${this.title2 && this.twoLine ? html`<span class="mdc-list-item__secondary-text ellipses">Secondary text</span>` : ''}
-      </span>
-      ${this.trailingIcon ? this._trailingIconTemplate() : ''}
-    </div>
+      <div class="mdc-list-item layout horizontal center" tabindex="0">
 
+        ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
+
+        <!-- Leading icon -->
+        ${this.leadingIcon ? this._leadingIconTemplate() : ''}
+
+        <!-- Item text -->
+        <span class="mdc-list-item__text layout vertical flex ellipses">
+          <span class="mdc-list-item__primary-text ellipses">Two-line item</span>
+          ${this.title2 && this.twoLine ? html`<span class="mdc-list-item__secondary-text body2 ellipses">Secondary text</span>` : ''}
+        </span>
+
+        <!-- Trailing Icon -->
+        ${this.trailingIcon ? this._trailingIconTemplate() : ''}
+      </div>
     `
   }
 
@@ -296,7 +223,7 @@ export class DwListItem extends LitElement {
 
   _trailingIconTemplate(){
     return html`
-      <dw-icon-button class="mdc-list-item__graphic" ?disabled="${this.disabled}" .icon="${this.trailingIcon}"></dw-icon-button>
+      <dw-icon-button class="mdc-list-item__graphic trailing-icon" ?disabled="${this.disabled}" .icon="${this.trailingIcon}"></dw-icon-button>
     `
   }
 
