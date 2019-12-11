@@ -19,37 +19,84 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       body{
         font-family: Roboto;
+        margin: 24px;
+      }
+
+      .wrapper{
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        border: 1px solid rgba(0,0,0,.1);
+      }
+
+      h4{
+        margin: 8px 0;
+        font-weight: 500;
       }
     </style>
   </head>
 
   <body>
-    <h3>Basic</h3>
-    <dw-list-item active title1="Item 1"></dw-list-item>
+    <h2>Basic</h2>
+    <div class="wrapper">
+      <h4>Normal</h4>
+      <dw-list-item title1="Item1"></dw-list-item>
+      <h4>Selected</h4>
+      <dw-list-item selected title1="Item1"></dw-list-item>
+      <h4>Active</h4>
+      <dw-list-item active title1="Item1"></dw-list-item>
+      <h4>Active & selected</h4>
+      <dw-list-item active selected title1="Item1"></dw-list-item>
+      <h4>Disabled</h4>
+      <dw-list-item title1="Item1" disabled></dw-list-item>
+    </div>
 
-    <dw-list-item active selected title1="Item 1"></dw-list-item>
+    <h2>With leading & trailing icon</h2>
+    <div class="wrapper">
+      <h4>Normal</h4>
+      <dw-list-item title1="Item1" leadingIcon="favorite" trailingIcon="done"></dw-list-item>
+      <h4>Selected with leading icon</h4>
+      <dw-list-item selected title1="Item1" leadingIcon="favorite"></dw-list-item>
+      <h4>active with leading icon</h4>
+      <dw-list-item active title1="Item1" leadingIcon="favorite"></dw-list-item>
+      <h4>Selected & active with trailin icon</h4>
+      <dw-list-item active selected title1="Item1" trailingIcon="done"></dw-list-item>
+      <h4>disabled</h4>
+      <dw-list-item title1="Item1" leadingIcon="favorite" trailingIcon="done" disabled></dw-list-item>
+    </div>
 
-    <h3>Two line</h3>
-    <dw-list-item selected title1="Main title" title2="Sub title" twoLine></dw-list-item>
+    <h2>Two line</h2>
+    <div class="wrapper">
+      <h4>Normal</h4>
+      <dw-list-item title1="Main title" title2="Sub title" twoLine></dw-list-item>
+      <h4>Selected</h4>
+      <dw-list-item selected title1="Main title" title2="Sub title" twoLine></dw-list-item>
+      <h4>Active</h4>
+      <dw-list-item active title1="Main title" title2="Sub title" twoLine></dw-list-item>
+      <h4>Selected with leading icon</h4>
+      <dw-list-item selected title1="Main title" title2="Sub title" twoLine leadingIcon="favorite"></dw-list-item>
+      <h4>Selected & active </h4>
+      <dw-list-item selected active title1="Main title" title2="Sub title" twoLine></dw-list-item>
+      <h4>disabled</h4>
+      <dw-list-item title1="Main title" title2="Sub title" twoLine disabled></dw-list-item>
+    </div>  
 
-    <h3>With leading icon</h3>
-    <dw-list-item selected title1="Item 1" leadingIcon="favorite"></dw-list-item>
+    <h2>Dense</h2>
+    <div class="wrapper">
+      <h4>Dense</h4>
+      <dw-list-item title1="Item1" dense></dw-list-item>
+      <h4>Selected dense</h4>
+      <dw-list-item title1="Item1" dense selected></dw-list-item>
+      <h4>Active dense</h4>
+      <dw-list-item title1="Item1" dense active></dw-list-item>
+      <h4>Selected & active dense</h4>
+      <dw-list-item title1="Item1" dense active selected></dw-list-item>
+      <h4>Dense with leading icon & trailing icon</h4>
+      <dw-list-item title1="Item1" dense leadingIcon="favorite" trailingIcon="done"></dw-list-item>
+      <h4>disabled</h4>
+      <dw-list-item title1="Item1" dense disabled></dw-list-item>
+    </div>
 
-    <h3>With trailing icon</h3>
-    <dw-list-item title1="Item 1" trailingIcon="done"></dw-list-item>
-
-    <h3>dense</h3>
-    <dw-list-item title1="Item 1" dense></dw-list-item>
-    <dw-list-item title1="Item 1" dense selected></dw-list-item>
-    <dw-list-item title1="Item 1" dense active></dw-list-item>
-    <dw-list-item title1="Item 1" dense active selected></dw-list-item>
-    <dw-list-item title1="Item 1" dense leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-
-    <h3>Disabled</h3>
-    <dw-list-item title1="Item 1" disabled></dw-list-item>
-    <dw-list-item title1="Item 1" disabled selected></dw-list-item>
-    <dw-list-item title1="Item 1" disabled active></dw-list-item>
-    <dw-list-item title1="Item 1" disabled leadingIcon="favorite" trailingIcon="favorite"></dw-list-item>
   </body>
   
 </html>

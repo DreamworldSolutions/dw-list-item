@@ -103,6 +103,10 @@ export class DwListItem extends LitElement {
           opacity: 0.24;
         }
 
+        :host(:not([disabled])[active][selected]) .mdc-list-item:hover::before{
+          opacity: 0.24;
+        }
+
         :host(:not([disabled])[active]) .mdc-list-item:hover::before {
           opacity: 0.16;
         }
@@ -205,8 +209,8 @@ export class DwListItem extends LitElement {
 
         <!-- Item text -->
         <span class="mdc-list-item__text layout vertical flex ellipses">
-          <span class="mdc-list-item__primary-text ellipses">Two-line item</span>
-          ${this.title2 && this.twoLine ? html`<span class="mdc-list-item__secondary-text body2 ellipses">Secondary text</span>` : ''}
+          <span class="mdc-list-item__primary-text ellipses">${this.title1}</span>
+          ${this.title2 && this.twoLine ? html`<span class="mdc-list-item__secondary-text body2 ellipses">${this.title2}</span>` : ''}
         </span>
 
         <!-- Trailing Icon -->
