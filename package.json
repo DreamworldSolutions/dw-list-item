@@ -22,7 +22,6 @@
   "homepage": "https://github.com/DreamworldSolutions/dw-list-item#readme",
   "dependencies": {
     "@dreamworld/dw-icon": "^1.1.0",
-    "@dreamworld/dw-icon-button": "^1.1.2",
     "@dreamworld/dw-ripple": "^1.1.0",
     "@dreamworld/flex-layout": "^1.1.0",
     "@dreamworld/material-styles": "^1.1.0",

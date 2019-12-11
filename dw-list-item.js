@@ -10,7 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { LitElement, html, css } from 'lit-element';
 import '@dreamworld/dw-icon';
-import '@dreamworld/dw-icon-button';
 import '@dreamworld/dw-ripple';
 
 //These are dw style needed by this element.
@@ -41,24 +40,23 @@ export class DwListItem extends LitElement {
           overflow: hidden;
         }
 
-        .mdc-list-item {
+        .list-item {
           height: 48px;
           position: relative;
           padding: 0 16px;
           overflow: hidden;
           outline: none;
+          cursor:pointer;
         }
 
-        :host([selected]) .mdc-list-item,
-        :host([active]) .mdc-list-item,
-        :host([selected]) .mdc-list-item .mdc-list-item__graphic,
-        :host([active]) .mdc-list-item .mdc-list-item__graphic {
+        :host([selected]) .list-item,
+        :host([selected]) .list-item .list-item__icon{
           color: var(--mdc-theme-primary, #6200ee);
           /* Used by dw-ripple */
           --mdc-theme-on-surface: var(--mdc-theme-primary, #6200ee);
         }
 
-        .mdc-list-item__graphic {
+        .list-item__icon {
           background-color: transparent;
           color: var(--dw-icon-color, rgba(0, 0, 0, 0.38));
           margin-left: 0;
@@ -67,16 +65,16 @@ export class DwListItem extends LitElement {
           height: 24px; */
         }
 
-        .mdc-list-item__graphic.trailing-icon,
-        :host([dense]) .mdc-list-item__graphic.trailing-icon{
+        .list-item__icon.trailing-icon,
+        :host([dense]) .list-item__icon.trailing-icon{
           margin-right: 0;
         }
 
-        .mdc-list-item__secondary-text {
+        .list-item__secondary-text {
           color: var(--mdc-theme-text-secondary, rgba(0, 0, 0, 0.54));
         }
 
-        :host(:not([disabled])) .mdc-list-item::before{
+        :host(:not([disabled])) .list-item::before{
           content: "";
           opacity: 0;
           pointer-events: none;
@@ -90,57 +88,49 @@ export class DwListItem extends LitElement {
           z-index: 1;
         }
 
-        :host(:not([disabled])) .mdc-list-item:hover::before {
+        :host(:not([disabled])) .list-item:hover::before {
           opacity: 0.04;
         }
 
-        :host(:not([disabled])[active]) .mdc-list-item::before {
+        :host(:not([disabled])[active]) .list-item::before,
+        :host(:not([disabled])[active]) .list-item:hover::before {
           opacity: 0.12;
-          background-color: var(--mdc-theme-primary, #6200ee);
         }
 
-        :host(:not([disabled])[active][selected]) .mdc-list-item::before{
+        :host(:not([disabled])[active][selected]) .list-item::before,
+        :host(:not([disabled])[active][selected]) .list-item:hover::before{
           opacity: 0.24;
         }
 
-        :host(:not([disabled])[active][selected]) .mdc-list-item:hover::before{
-          opacity: 0.24;
-        }
-
-        :host(:not([disabled])[active]) .mdc-list-item:hover::before {
-          opacity: 0.16;
-        }
-
-        :host(:not([disabled])[selected]) .mdc-list-item::before {
+        :host(:not([disabled])[selected]) .list-item::before {
           opacity: 0.08;
           background-color: var(--mdc-theme-primary, #6200ee);
         }
 
-        :host(:not([disabled])[selected]) .mdc-list-item:hover::before {
+        :host(:not([disabled])[selected]) .list-item:hover::before {
           opacity: 0.12;
         }
 
-        :host([disabled]) .mdc-list-item__text {
-          opacity: 0.38;
-          color: var(--mdc-theme-text-disabled, #000);
+        :host([disabled]) .list-item__text {
+          color: var(--mdc-theme-text-disabled, rgba(0,0,0,0.38));
         }
 
-        :host([dense]) .mdc-list-item {
+        :host([dense]) .list-item {
           height: 40px;
         }
 
-        :host([dense]) .mdc-list-item__graphic {
+        :host([dense]) .list-item__icon {
           margin-left: 0;
           margin-right: 36px;
           width: 20px;
           height: 20px;
         }
 
-        :host([twoline]) .mdc-list-item {
+        :host([twoline]) .list-item {
           height: 72px;
         }
 
-        :host([twoline]).mdc-list--dense .mdc-list-item {
+        :host([twoline][dense]) .list-item {
           height: 60px;
         }
       `
@@ -196,38 +186,47 @@ export class DwListItem extends LitElement {
 
     this.twoLine = false;
     this.dense = false;
+    this.disabled = false;
   }
 
   render() {
     return html`
-      <div class="mdc-list-item layout horizontal center" tabindex="0">
+      <div class="list-item layout horizontal center" tabindex="0">
 
         ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
 
         <!-- Leading icon -->
-        ${this.leadingIcon ? this._leadingIconTemplate() : ''}
+        ${this.leadingIcon ? this._leadingIconTemplate : ''}
 
         <!-- Item text -->
-        <span class="mdc-list-item__text layout vertical flex ellipses">
-          <span class="mdc-list-item__primary-text ellipses">${this.title1}</span>
-          ${this.title2 && this.twoLine ? html`<span class="mdc-list-item__secondary-text body2 ellipses">${this.title2}</span>` : ''}
+        <span class="list-item__text layout vertical flex ellipses">
+          <span class="list-item__primary-text ellipses">${this.title1}</span>
+          ${this.title2 && this.twoLine ? html`<span class="list-item__secondary-text body2 ellipses">${this.title2}</span>` : ''}
         </span>
 
         <!-- Trailing Icon -->
-        ${this.trailingIcon ? this._trailingIconTemplate() : ''}
+        ${this.trailingIcon ? this._trailingIconTemplate : ''}
       </div>
     `
   }
 
-  _leadingIconTemplate(){
+  /**
+   * Returns leading icon's template
+   * Override this function to customize leading icon
+   */
+  get _leadingIconTemplate(){
     return html`
-      <dw-icon class="leading-icon mdc-list-item__graphic" ?disabled="${this.disabled}" name="${this.leadingIcon}"></dw-icon>
+      <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" name="${this.leadingIcon}"></dw-icon>
     `
   }
 
-  _trailingIconTemplate(){
+  /**
+   * Returns trailing icon's template
+   * Override this function to customize trailing icon
+   */
+  get _trailingIconTemplate(){
     return html`
-      <dw-icon-button class="mdc-list-item__graphic trailing-icon" ?disabled="${this.disabled}" .icon="${this.trailingIcon}"></dw-icon-button>
+      <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
     `
   }
 
