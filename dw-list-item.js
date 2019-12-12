@@ -28,6 +28,8 @@ export class DwListItem extends LitElement {
       css`
         :host{
           display: block;
+          user-select: none;
+          --dw-icon-color-active: var(--mdc-theme-primary, #6200ee)
         }
 
         :host([hidden]){
@@ -49,9 +51,9 @@ export class DwListItem extends LitElement {
           cursor:pointer;
         }
 
-        :host([selected]) .list-item,
-        :host([selected]) .list-item .list-item__icon{
+        :host([selected]) .list-item{
           color: var(--mdc-theme-primary, #6200ee);
+          --dw-icon-color: var(--dw-icon-color-active, #6200ee);
           /* Used by dw-ripple */
           --mdc-theme-on-surface: var(--mdc-theme-primary, #6200ee);
         }
@@ -61,8 +63,6 @@ export class DwListItem extends LitElement {
           color: var(--dw-icon-color, rgba(0, 0, 0, 0.38));
           margin-left: 0;
           margin-right: 32px;
-          /* width: 24px;
-          height: 24px; */
         }
 
         .list-item__icon.trailing-icon,
@@ -70,7 +70,7 @@ export class DwListItem extends LitElement {
           margin-right: 0;
         }
 
-        .list-item__secondary-text {
+        .secondary-text {
           color: var(--mdc-theme-text-secondary, rgba(0, 0, 0, 0.54));
         }
 
@@ -84,7 +84,7 @@ export class DwListItem extends LitElement {
           right: 0;
           bottom: 0;
           background-color: #000;
-          transition: opacity 15ms linear, background-color 15ms linear;
+          transition: opacity 75ms linear, background-color 75ms linear;
           z-index: 1;
         }
 
@@ -111,7 +111,16 @@ export class DwListItem extends LitElement {
           opacity: 0.12;
         }
 
-        :host([disabled]) .list-item__text {
+        :host([disabled]) .list-item{
+          cursor: normal;
+          pointer-events: none;
+        }
+
+        :host([disabled]){
+          pointer-events: none;
+        }
+
+        :host([disabled]) .item-text-container {
           color: var(--mdc-theme-text-disabled, rgba(0,0,0,0.38));
         }
 
@@ -199,9 +208,9 @@ export class DwListItem extends LitElement {
         ${this.leadingIcon ? this._leadingIconTemplate : ''}
 
         <!-- Item text -->
-        <span class="list-item__text layout vertical flex ellipses">
-          <span class="list-item__primary-text ellipses">${this.title1}</span>
-          ${this.title2 && this.twoLine ? html`<span class="list-item__secondary-text body2 ellipses">${this.title2}</span>` : ''}
+        <span class="item-text-container layout vertical flex ellipses">
+          <span class="primary-text subtitle1 ellipses">${this.title1}</span>
+          ${this.title2 && this.twoLine ? html`<span class="secondary-text body2 ellipses">${this.title2}</span>` : ''}
         </span>
 
         <!-- Trailing Icon -->
