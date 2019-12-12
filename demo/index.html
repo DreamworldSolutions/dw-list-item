@@ -15,103 +15,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta charset="utf-8">
     <title>dw-list-item demo</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <script type="module" src="../dw-list-item.js"></script>
+    <script type="module" src="./dw-list-item-demo.js"></script>
     <style>
       body{
-        font-family: Roboto;
         margin: 24px;
-      }
-
-      .wrapper{
-        display: flex;
-        flex-direction: column;
-        border: 1px solid rgba(0,0,0,.1);
-        margin-bottom: 30px;
-      }
-
-      h4{
-        margin: 16px 8px;
-        text-transform: capitalize;
-      }
-
-      .item-wrapper{
-        display: flex;
-        flex-direction: row;
-      }
-
-      .item-wrapper > div{
-        display: flex;
-        flex-direction: column;
-        flex:1;
-        margin-right: 24px;
+        font-family: Roboto;
       }
     </style>
   </head>
 
   <body>
-    <section class="item-wrapper">
-      <div>
-        <h2>Basic</h2>
-        <div class="wrapper">
-          <h4>Normal</h4>
-          <dw-list-item title1="Item1"></dw-list-item>
-
-          <h4>Selected</h4>
-          <dw-list-item selected title1="Item1"></dw-list-item>
-
-          <h4>Active</h4>
-          <dw-list-item active title1="Item1"></dw-list-item>
-
-          <h4>Active & selected</h4>
-          <dw-list-item active selected title1="Item1" leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-          
-          <h4>Disabled</h4>
-          <dw-list-item title1="Item1" disabled leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-        </div>
-      </div>
-
-      <div>
-        <h2>Dense</h2>
-        <div class="wrapper">
-          <h4>Normal</h4>
-          <dw-list-item title1="Item1" dense></dw-list-item>
-
-          <h4>Selected</h4>
-          <dw-list-item title1="Item1" dense selected></dw-list-item>
-
-          <h4>Active</h4>
-          <dw-list-item title1="Item1" dense active></dw-list-item>
-
-          <h4>Selected & active</h4>
-          <dw-list-item title1="Item1" dense active selected leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-
-          <h4>Disabled</h4>
-          <dw-list-item title1="Item1" dense disabled leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-        </div>
-      </div>
-
-      <div>
-          <h2>Two line</h2>
-          <div class="wrapper">
-            <h4>Normal</h4>
-            <dw-list-item title1="Main title" title2="Sub title" twoLine></dw-list-item>
-
-            <h4>Selected</h4>
-            <dw-list-item selected title1="Main title" title2="Sub title" twoLine></dw-list-item>
-
-            <h4>Active</h4>
-            <dw-list-item active title1="Main title" title2="Sub title" twoLine></dw-list-item>
-
-
-            <h4>Selected & active </h4>
-            <dw-list-item selected active title1="Main title" title2="Sub title" twoLine leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-
-            <h4>disabled</h4>
-            <dw-list-item title1="Main title" title2="Sub title" twoLine disabled leadingIcon="favorite" trailingIcon="done"></dw-list-item>
-          </div>  
-        </div>
-    </section>
-
+    <dw-list-item-demo></dw-list-item-demo>
   </body>
   
 </html>
