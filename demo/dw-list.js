@@ -72,14 +72,16 @@ export class DwList extends LitElement{
 
   _onClick(e) { 
     if (this._previousItem) { 
-      this._previousItem.removeAttribute('selected')
+      this._previousItem.removeAttribute('selected');
+      this._previousItem.removeAttribute('active');
     }
     this.items[this._clickIndex] && this.items[this._clickIndex].removeAttribute('active');
 
     let clickedIndex = e.target.getAttribute('index');
 
     this._clickIndex = Number(clickedIndex);
-    e.target.setAttribute('selected', true)
+    e.target.setAttribute('selected', true);
+    e.target.setAttribute('active', true);
     this._previousItem = e.target;
   }
 

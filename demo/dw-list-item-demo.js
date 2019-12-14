@@ -40,7 +40,10 @@ export class DwListItemDemo extends LitElement{
 
   static get properties() {
     return {
-      _itemList: { type: Array }
+      _basicItemList: { type: Array },
+      _denseItemList: { type: Array },
+      _multiItemList: { type: Array },
+      _disabledItemList: { type: Array }
     };
   }
 
