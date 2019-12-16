@@ -81,7 +81,7 @@ export class DwListItemDemo extends LitElement{
 
         <dw-list header="With icons">
           ${this._basicItemList.map((item, index) => html`
-            <dw-list-item title1="${item}" index=${index} trailingIcon="done" leadingIcon="favorite"></dw-list-item>
+            <dw-list-item title1="${item}" index=${index} leadingIcon="favorite"></dw-list-item>
           `)}
         </dw-list>
       </div>

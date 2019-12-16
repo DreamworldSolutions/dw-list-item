@@ -62,7 +62,7 @@ export class DwListItem extends LitElement {
           background-color: transparent;
           color: var(--dw-icon-color, rgba(0, 0, 0, 0.38));
           margin-left: 0;
-          margin-right: 32px;
+          margin-right: 16px;
         }
 
         .list-item__icon.trailing-icon,
