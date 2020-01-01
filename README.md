@@ -1,36 +1,23 @@
 # dw-list-item
 
-- A material design item used to show single item of the list [More detail](https://material.io/components/lists/#)
+A material design item used to show single item of the list [More detail](https://material.io/components/lists/#)
 
 ## Installation
 
-``` html
+```
 npm install --save @dreamworld/dw-list-item
 ```
 
 ## Usage
 
-``` html
+```js
   import '@dreamworld/dw-list-item/dw-list-item';
 ```
 
-## Usage pattern
-
-``` html
-  import { DwDialog } from '@dreamworld/dw-list-item/dw-list-item';
-
-  <dw-list-item></dw-list-item>
-  }
-```
-
-## Example Usage
-
-### Basic
+### Basic (Single Line)
 
 ```html
-
   <dw-list-item title1="Item 1"></dw-list-item>
-
 ```
 
 ### Two line
@@ -38,6 +25,8 @@ npm install --save @dreamworld/dw-list-item
 ```html
   
   <dw-list-item title1="Main title" title2="Sub title" twoLine></dw-list-item>
+  <!-- Though, title2 isn't specified, will occupy 2 line height -->
+  <dw-list-item title1="Main title"  twoLine></dw-list-item>
 ```
 
 ### WIth leading and trailing icon
@@ -59,12 +48,10 @@ npm install --save @dreamworld/dw-list-item
 ```
 
 ## Attributes
-
-- active - When true shows active item's style
-- selected - When true shows selected item's style
+- `active` - When true shows active item's style
+- `selected` - When true shows selected item's style
 
 ## CSS Custom Properties
-
 | Name  | Description |
 | ----  | ----------- |
 | --dw-list-item-hover-background | Background color of the hovered item  |

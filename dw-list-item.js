@@ -225,7 +225,7 @@ export class DwListItem extends LitElement {
    */
   get _leadingIconTemplate(){
     return html`
-      <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" name="${this.leadingIcon}"></dw-icon>
+      <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
     `
   }
 
