@@ -61,66 +61,20 @@ export class DwList extends LitElement{
 
   connectedCallback() {
     super.connectedCallback && super.connectedCallback();
-    this._addKeyEventListeners();
-    this.items = this.querySelectorAll('dw-list-item');
+    this.addEventListener('selection-changed', this._onClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback && super.disconnectedCallback();
-    this._removeKeyEventListeners();
+    this.removeEventListener('selection-changed', this._onClick);
   }
 
   _onClick(e) { 
     if (this._previousItem) { 
       this._previousItem.removeAttribute('selected');
-      this._previousItem.removeAttribute('active');
     }
-    this.items[this._clickIndex] && this.items[this._clickIndex].removeAttribute('active');
 
-    let clickedIndex = e.target.getAttribute('index');
-
-    this._clickIndex = Number(clickedIndex);
-    e.target.setAttribute('selected', true);
-    e.target.setAttribute('active', true);
     this._previousItem = e.target;
-  }
-
-  _addKeyEventListeners() {
-    this.addEventListener('keydown', this._onKeyDown);
-    this.addEventListener('click', this._onClick);
-  }
-
-  _removeKeyEventListeners() {
-    this.removeEventListener('keydown', this._onKeyDown);
-    this.removeEventListener('click', this._onClick);
-  }
-
-  _onKeyDown(e) {
-    let keyCode = e.keyCode || e.which;
-
-    //Down arrow key down
-    if(keyCode === 40) {
-      this._onDownArrowKey(e);
-      return;
-    }
-
-    //Up arrow key down
-    if(keyCode === 38) {
-      this._onUpArrowKey(e);
-      return;
-    }
-  }
-  
-  _onUpArrowKey() {
-    this.items[this._clickIndex].removeAttribute('active');
-    this._clickIndex = this._clickIndex > 0 ? this._clickIndex - 1 : this._clickIndex;
-    this.items[this._clickIndex].setAttribute('active', true);
-  }
-
-  _onDownArrowKey() {
-    this.items[this._clickIndex].removeAttribute('active');
-    this._clickIndex = this._clickIndex < this.items.length - 1 ? this._clickIndex + 1 : this._clickIndex;
-    this.items[this._clickIndex].setAttribute('active', true);
   }
 
 }

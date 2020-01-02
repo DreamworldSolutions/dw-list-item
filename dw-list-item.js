@@ -13,22 +13,19 @@ import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
 
 //These are dw style needed by this element.
-import { flexLayout } from '@dreamworld/flex-layout/flex-layout';
-import { alignment } from '@dreamworld/flex-layout/flex-layout-alignment';
 import { Typography } from '@dreamworld/material-styles/typography';
-import { factors } from '@dreamworld/flex-layout/flex-layout-factors';
+import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
+import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
 
 export class DwListItem extends LitElement {
   static get styles() {
     return [
-      flexLayout,
-      alignment,
       Typography,
-      factors,
       css`
         :host{
           display: block;
           user-select: none;
+          outline: none;
           --dw-icon-color-active: var(--mdc-theme-primary, #6200ee)
         }
 
@@ -43,12 +40,21 @@ export class DwListItem extends LitElement {
         }
 
         .list-item {
+          ${displayFlex};
+          ${horizontal};
+          ${centerAligned};
           height: 48px;
           position: relative;
           padding: 0 16px;
           overflow: hidden;
           outline: none;
           cursor:pointer;
+        }
+
+        .item-text-container {
+          ${displayFlex};
+          ${vertical};
+          ${flexFactor};
         }
 
         :host([selected]) .list-item{
@@ -92,13 +98,13 @@ export class DwListItem extends LitElement {
           opacity: 0.04;
         }
 
-        :host(:not([disabled])[active]) .list-item::before,
-        :host(:not([disabled])[active]) .list-item:hover::before {
+        :host(:focus) .list-item::before,
+        :host(:focus) .list-item:hover::before {
           opacity: 0.12;
         }
 
-        :host(:not([disabled])[active][selected]) .list-item::before,
-        :host(:not([disabled])[active][selected]) .list-item:hover::before{
+        :host(:focus[selected]:not([disabled])) .list-item::before,
+        :host(:focus[selected]:not([disabled])) .list-item:hover::before{
           opacity: 0.24;
         }
 
@@ -162,32 +168,67 @@ export class DwListItem extends LitElement {
       title2: { type: String },
 
       /**
+       * Input property
        * Set to true to show dense item.
        * Dense item will have less height compare to normal item
        */
       dense: { type: Boolean, reflect: true },
 
       /**
+       * Input property
        * Name of icon to show as a leading icon
        */
       leadingIcon: { type: String },
 
       /**
+       * Input property
        * Name of icon to show as a trailing icon
        */
       trailingIcon: { type: String },
 
       /**
+       * Input property
        * Set to true to show twoLine item
        */
       twoLine: { type: Boolean, reflect: true},
 
-       /**
+      /**
+       * Input property
        * Shows disabled style when true
        */
       disabled: { type: Boolean, reflect: true },
 
+      /**
+       * Input property
+       * Defines whether selection should be toggles or force select
+       * Possible values: `toggle` & `select`
+       * Default value is `toggle`
+       */
+      selectionMode: { type: String },
+
+      /**
+       * Input/Output property
+       * Set to true to show item preselected
+       * It will be set to true on click or enter
+       */
+      selected: { type: Boolean, reflect: true }
+
     };
+  }
+
+  set selected(value) { 
+    if (value === this._selected) { 
+      return;
+    }
+
+    let oldValue = this._selected;
+    this._selected = value;
+    this._triggerSelectionChangedEvent();
+    this.requestUpdate('selected', oldValue);
+  }
+
+  get selected() { 
+    return this._selected;
   }
 
   constructor(){
@@ -196,11 +237,16 @@ export class DwListItem extends LitElement {
     this.twoLine = false;
     this.dense = false;
     this.disabled = false;
+    this.selectionMode = 'toggle';
+    this.selected = false;
+    this._keydownHandler = this._keydownHandler.bind(this);
+    this._selectItem = this._selectItem.bind(this);
+    this.setAttribute('tabindex', 0);
   }
 
   render() {
     return html`
-      <div class="list-item layout horizontal center" tabindex="0">
+      <div class="list-item">
 
         ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
 
@@ -208,15 +254,27 @@ export class DwListItem extends LitElement {
         ${this.leadingIcon ? this._leadingIconTemplate : ''}
 
         <!-- Item text -->
-        <span class="item-text-container layout vertical flex ellipses">
+        <div class="item-text-container ellipses">
           <span class="primary-text subtitle1 ellipses">${this.title1}</span>
           ${this.title2 && this.twoLine ? html`<span class="secondary-text body2 ellipses">${this.title2}</span>` : ''}
-        </span>
+        </div>
 
         <!-- Trailing Icon -->
         ${this.trailingIcon ? this._trailingIconTemplate : ''}
       </div>
     `
+  }
+
+  connectedCallback() { 
+    super.connectedCallback();
+    this.addEventListener('keydown', this._keydownHandler);
+    this.addEventListener('click', this._selectItem);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this._keydownHandler);
+    this.removeEventListener('click', this._selectItem);
   }
 
   /**
@@ -237,6 +295,93 @@ export class DwListItem extends LitElement {
     return html`
       <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
     `
+  }
+
+  /**
+   * Handles keyboard events like `down`, `up`, `enter`
+   */
+  _keydownHandler(e) {
+    // To prevent browser's scroll up/down 
+    e.preventDefault();
+
+    let keyCode = e.keyCode || e.which;
+
+    //Down arrow key down
+    if (keyCode === 40) {
+      this._focusNextElement(e.target.nextElementSibling);
+      return;
+    }
+
+    //Up arrow key down
+    if(keyCode === 38) {
+      this._focusPreviousElement(e.target.previousElementSibling);
+      return;
+    }
+
+    //Enter keydown
+    if (keyCode === 13) { 
+      this._selectItem();
+    }
+  }
+
+  /**
+   * Focused next element. It skips disabled element
+   */
+  _focusNextElement(el) { 
+    if (!el) { 
+      return;
+    }
+
+    if (!el.disabled) { 
+      el.focus && el.focus();
+      return;
+    }
+
+    this._focusNextElement(el.nextElementSibling);
+  }
+
+  /**
+   * Focused previous element. It skips disabled element
+   */
+  _focusPreviousElement(el) { 
+    if (!el) { 
+      return;
+    }
+
+    if (!el.disabled) { 
+      el.focus && el.focus();
+      return;
+    }
+
+    this._focusPreviousElement(el.previousElementSibling);
+  }
+  
+  /**
+   * Selects item based on `selectionMode`
+   */
+  _selectItem() { 
+    if (this.disabled) { 
+      return;
+    }
+
+    if (this.selectionMode === 'toggle' && this.selected) {
+      this.selected = false;
+      return;
+    }
+
+    this.selected = true;
+  }
+
+  /**
+   * @event Triggers `selection-changed` events
+   */
+  _triggerSelectionChangedEvent() { 
+    let event = new CustomEvent('selection-changed', {
+      bubbles: true,
+      composed: true
+    });
+    
+    this.dispatchEvent(event);
   }
 
 }

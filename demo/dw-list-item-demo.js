@@ -61,13 +61,16 @@ export class DwListItemDemo extends LitElement{
       <div>
         <dw-list header="Basic">
           ${this._basicItemList.map((item, index) => html`
-            <dw-list-item title1="${item}" index=${index}></dw-list-item>
+            <dw-list-item title1="${item}"></dw-list-item>
           `)}
+          <dw-list-item disabled title1="test"></dw-list-item>
+          <dw-list-item title1="test"></dw-list-item>
+          
         </dw-list>
 
         <dw-list header="Dense">
           ${this._denseItemList.map((item, index) => html`
-            <dw-list-item dense title1="${item}" index=${index}></dw-list-item>
+            <dw-list-item dense title1="${item}"></dw-list-item>
           `)}
         </dw-list>
       </div>
@@ -75,20 +78,20 @@ export class DwListItemDemo extends LitElement{
       <div>
         <dw-list header="Multi line">
           ${this._multiItemList.map((item, index) => html`
-            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title2="9 Jan 2018" index=${index}></dw-list-item>
+            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title2="9 Jan 2018"></dw-list-item>
           `)}
         </dw-list>
 
         <dw-list header="With icons">
           ${this._basicItemList.map((item, index) => html`
-            <dw-list-item title1="${item}" index=${index} leadingIcon="favorite"></dw-list-item>
+            <dw-list-item title1="${item}" leadingIcon="favorite"></dw-list-item>
           `)}
         </dw-list>
       </div>
 
         <dw-list header="Disabled">
           ${this._disabledItemList.map((item, index) => html`
-            <dw-list-item disabled title1="${item}" index=${index} leadingIcon="favorite"></dw-list-item>
+            <dw-list-item disabled title1="${item}" leadingIcon="favorite"></dw-list-item>
           `)}
         </dw-list>
 
