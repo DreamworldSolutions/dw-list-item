@@ -255,8 +255,8 @@ export class DwListItem extends LitElement {
 
         <!-- Item text -->
         <div class="item-text-container ellipses">
-          <span class="primary-text subtitle1 ellipses">${this.title1}</span>
-          ${this.title2 && this.twoLine ? html`<span class="secondary-text body2 ellipses">${this.title2}</span>` : ''}
+          <div class="primary-text subtitle1 ellipses">${this.title1}</div>
+          ${this.title2 && this.twoLine ? html`<div class="secondary-text body2 ellipses">${this.title2}</div>` : ''}
         </div>
 
         <!-- Trailing Icon -->
