@@ -17,7 +17,7 @@ import { Typography } from '@dreamworld/material-styles/typography';
 import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
 import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
 
-export class DwListItem extends LitElement {
+export class DwListItem extends LitElement { 
   static get styles() {
     return [
       Typography,
