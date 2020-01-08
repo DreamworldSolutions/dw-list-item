@@ -56,3 +56,13 @@ npm install --save @dreamworld/dw-list-item
 ## Events
 
 - `selection-changed` - Triggers when selection is changed.
+
+## CSS Custom Properties
+
+| Name  | Description |
+| ----  | ----------- |
+| --mdc-theme-primary | Selected item's background color and icon color. Default is `#6200ee` |
+| --mdc-theme-text-primary | Primary title's text color. Default is `rgba(0, 0, 0, 0.87)` |
+| --mdc-theme-text-secondary | Sub title's text color. Default is `rgba(0, 0, 0, 0.6)` |
+| --mdc-theme-text-disabled | Disabled text color when item is disabled. Default is `rgba(0, 0, 0, 0.38)` |
+| --dw-icon-color | Icon color in `normal` mode. Default is `rgba(0, 0, 0, 0.38)` In `selection` mode `--mdc-theme-primary` color will be used |

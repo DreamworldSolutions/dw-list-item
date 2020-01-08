@@ -23,9 +23,18 @@ export class DwListItem extends LitElement {
       Typography,
       css`
         :host{
-          display: block;
           user-select: none;
           outline: none;
+          ${displayFlex};
+          ${horizontal};
+          ${centerAligned};
+          height: 48px;
+          position: relative;
+          padding: 0 16px;
+          overflow: hidden;
+          outline: none;
+          cursor:pointer;
+          position: relative;
           --dw-icon-color-active: var(--mdc-theme-primary, #6200ee)
         }
 
@@ -39,25 +48,14 @@ export class DwListItem extends LitElement {
           overflow: hidden;
         }
 
-        .list-item {
-          ${displayFlex};
-          ${horizontal};
-          ${centerAligned};
-          height: 48px;
-          position: relative;
-          padding: 0 16px;
-          overflow: hidden;
-          outline: none;
-          cursor:pointer;
-        }
-
         .item-text-container {
           ${displayFlex};
           ${vertical};
           ${flexFactor};
+          color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 
-        :host([selected]) .list-item{
+        :host([selected]){
           color: var(--mdc-theme-primary, #6200ee);
           --dw-icon-color: var(--dw-icon-color-active, #6200ee);
           /* Used by dw-ripple */
@@ -80,7 +78,7 @@ export class DwListItem extends LitElement {
           color: var(--mdc-theme-text-secondary, rgba(0, 0, 0, 0.54));
         }
 
-        :host(:not([disabled])) .list-item::before{
+        :host(:not([disabled]))::before{
           content: "";
           opacity: 0;
           pointer-events: none;
@@ -94,35 +92,31 @@ export class DwListItem extends LitElement {
           z-index: 1;
         }
 
-        :host(:not([disabled])) .list-item:hover::before {
+        :host(:not([disabled]):hover)::before {
           opacity: 0.04;
         }
 
-        :host(:focus) .list-item::before,
-        :host(:focus) .list-item:hover::before {
+        :host(:focus)::before,
+        :host(:focus:hover)::before {
           opacity: 0.12;
         }
 
-        :host(:focus[selected]:not([disabled])) .list-item::before,
-        :host(:focus[selected]:not([disabled])) .list-item:hover::before{
+        :host(:focus[selected]:not([disabled]))::before,
+        :host(:focus[selected]:not([disabled]):hover)::before{
           opacity: 0.24;
         }
 
-        :host(:not([disabled])[selected]) .list-item::before {
+        :host(:not([disabled])[selected])::before {
           opacity: 0.08;
           background-color: var(--mdc-theme-primary, #6200ee);
         }
 
-        :host(:not([disabled])[selected]) .list-item:hover::before {
+        :host(:not([disabled])[selected]:hover)::before {
           opacity: 0.12;
         }
 
-        :host([disabled]) .list-item{
-          cursor: normal;
-          pointer-events: none;
-        }
-
         :host([disabled]){
+          cursor: normal;
           pointer-events: none;
         }
 
@@ -130,7 +124,7 @@ export class DwListItem extends LitElement {
           color: var(--mdc-theme-text-disabled, rgba(0,0,0,0.38));
         }
 
-        :host([dense]) .list-item {
+        :host([dense]) {
           height: 40px;
         }
 
@@ -141,12 +135,26 @@ export class DwListItem extends LitElement {
           height: 20px;
         }
 
-        :host([twoline]) .list-item {
+        :host([twoline]) {
           height: 72px;
         }
 
-        :host([twoline][dense]) .list-item {
+        :host([twoline][dense]) {
           height: 60px;
+        }
+
+        /* This is to show ripple on click.
+         * By default "dw-ripple" sets relative position to the parent element which is not host element.
+         * But it isn't sets relative position on the host element.
+         * So, to show ripple we need to make ripple element to fit within host element.
+         * Setting important here, because "dw-ripple" elements sets relative position as a inline style on itself in case of parent element is host.
+         */
+        dw-ripple{
+          position: absolute !important;
+          top: 0px;
+          right: 0px;
+          bottom: 0px;
+          left: 0px;
         }
       `
     ];
@@ -231,6 +239,19 @@ export class DwListItem extends LitElement {
     return this._selected;
   }
 
+  set disabled(value) { 
+    this.setAttribute('tabindex', -1);
+
+    let oldValue = this._disabled;
+
+    this._disabled = value;
+    this.requestUpdate('disabled', oldValue);
+  }
+
+  get disabled() { 
+    return this._disabled;
+  }
+
   constructor(){
     super();
 
@@ -246,23 +267,21 @@ export class DwListItem extends LitElement {
 
   render() {
     return html`
-      <div class="list-item">
 
-        ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
+      ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
 
-        <!-- Leading icon -->
-        ${this.leadingIcon ? this._leadingIconTemplate : ''}
+      <!-- Leading icon -->
+      ${this.leadingIcon ? this._leadingIconTemplate : ''}
 
-        <!-- Item text -->
-        <div class="item-text-container ellipses">
-          <div class="primary-text subtitle1 ellipses">${this.title1}</div>
-          ${this.title2 && this.twoLine ? html`<div class="secondary-text body2 ellipses">${this.title2}</div>` : ''}
-        </div>
-
-        <!-- Trailing Icon -->
-        ${this.trailingIcon ? this._trailingIconTemplate : ''}
+      <!-- Item text -->
+      <div class="item-text-container ellipses">
+        <div class="primary-text subtitle1 ellipses">${this.title1}</div>
+        ${this.title2 && this.twoLine ? html`<div class="secondary-text body2 ellipses">${this.title2}</div>` : ''}
       </div>
-    `
+
+      <!-- Trailing Icon -->
+      ${this.trailingIcon ? this._trailingIconTemplate : ''}
+    `;
   }
 
   connectedCallback() { 
@@ -284,7 +303,7 @@ export class DwListItem extends LitElement {
   get _leadingIconTemplate(){
     return html`
       <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
-    `
+    `;
   }
 
   /**
@@ -294,26 +313,27 @@ export class DwListItem extends LitElement {
   get _trailingIconTemplate(){
     return html`
       <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
-    `
+    `;
   }
 
   /**
    * Handles keyboard events like `down`, `up`, `enter`
    */
   _keydownHandler(e) {
-    // To prevent browser's scroll up/down 
-    e.preventDefault();
-
     let keyCode = e.keyCode || e.which;
 
     //Down Arrows
     if (keyCode === 40) {
+      // To prevent browser's scroll up/down 
+      e.preventDefault();
       this._focusNextElement(e.target.nextElementSibling);
       return;
     }
 
     //Up Arrow 
-    if(keyCode === 38) {
+    if (keyCode === 38) {
+      // To prevent browser's scroll up/down 
+      e.preventDefault();
       this._focusPreviousElement(e.target.previousElementSibling);
       return;
     }
