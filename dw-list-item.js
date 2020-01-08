@@ -201,8 +201,8 @@ export class DwListItem extends LitElement {
       /**
        * Input property
        * Defines whether selection should be toggles or force select
-       * Possible values: `toggle` & `select`
-       * Default value is `toggle`
+       * Possible values: `toggle` & `default`
+       * Default value is `default`
        */
       selectionMode: { type: String },
 
@@ -223,8 +223,8 @@ export class DwListItem extends LitElement {
 
     let oldValue = this._selected;
     this._selected = value;
-    this._triggerSelectionChangedEvent();
     this.requestUpdate('selected', oldValue);
+    this._triggerSelectionChangedEvent();
   }
 
   get selected() { 
@@ -237,7 +237,7 @@ export class DwListItem extends LitElement {
     this.twoLine = false;
     this.dense = false;
     this.disabled = false;
-    this.selectionMode = 'toggle';
+    this.selectionMode = 'default';
     this.selected = false;
     this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
@@ -306,19 +306,19 @@ export class DwListItem extends LitElement {
 
     let keyCode = e.keyCode || e.which;
 
-    //Down arrow key down
+    //Down Arrows
     if (keyCode === 40) {
       this._focusNextElement(e.target.nextElementSibling);
       return;
     }
 
-    //Up arrow key down
+    //Up Arrow 
     if(keyCode === 38) {
       this._focusPreviousElement(e.target.previousElementSibling);
       return;
     }
 
-    //Enter keydown
+    //Enter
     if (keyCode === 13) { 
       this._selectItem();
     }
@@ -357,19 +357,14 @@ export class DwListItem extends LitElement {
   }
   
   /**
-   * Selects item based on `selectionMode`
+   * Updates selection based on `selectionMode`. Skips if `disabled`.
    */
   _selectItem() { 
     if (this.disabled) { 
       return;
     }
 
-    if (this.selectionMode === 'toggle' && this.selected) {
-      this.selected = false;
-      return;
-    }
-
-    this.selected = true;
+    this.selected = this.selectionMode === 'toggle' ? !this.selected : true;
   }
 
   /**
