@@ -302,7 +302,7 @@ export class DwListItem extends LitElement {
    */
   get _leadingIconTemplate(){
     return html`
-      <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
+      <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
     `;
   }
 
@@ -312,7 +312,7 @@ export class DwListItem extends LitElement {
    */
   get _trailingIconTemplate(){
     return html`
-      <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
+      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
     `;
   }
 
