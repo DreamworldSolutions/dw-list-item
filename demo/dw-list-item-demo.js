@@ -63,8 +63,10 @@ export class DwListItemDemo extends LitElement{
           ${this._basicItemList.map((item, index) => html`
             <dw-list-item title1="${item}"></dw-list-item>
           `)}
-          <dw-list-item disabled title1="test"></dw-list-item>
-          <dw-list-item title1="test"></dw-list-item>
+          <dw-list-item disabled title1="Item6"></dw-list-item>
+          <dw-list-item title1="Item7"></dw-list-item>
+          <dw-list-item title1="Item without selection mode" selectionMode="none"></dw-list-item>
+          <dw-list-item title1="Item8"></dw-list-item>
           
         </dw-list>
 
