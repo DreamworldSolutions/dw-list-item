@@ -51,7 +51,7 @@ npm install --save @dreamworld/dw-list-item
 
 ## Property
 - `selected` - When true shows selected item's style
-- `selectionMode` - whether selection should be toggled or default/forced. Possible values: `default`, `toggle`. In `default` mode, if item isn't yet selected, it becomes selected. If item is already selected, no change in the selection state. While in toggle mode, selection is toggled.
+- `selectionMode` - whether selection should be toggled or default/forced. Possible values: `default`, `toggle`, `none`. In `default` mode, if item isn't yet selected, it becomes selected. If item is already selected, no change in the selection state. While in toggle mode, selection is toggled. while in `none` mode, selection won't work so it's view-only item in this mode.
 
 ## Events
 

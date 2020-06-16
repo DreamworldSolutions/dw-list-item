@@ -16,8 +16,9 @@ import '@dreamworld/dw-ripple';
 import { Typography } from '@dreamworld/material-styles/typography';
 import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
 import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
+import { focusWithin } from '@dreamworld/pwa-helpers';
 
-export class DwListItem extends LitElement { 
+export class DwListItem extends focusWithin(LitElement) { 
   static get styles() {
     return [
       Typography,
@@ -97,12 +98,32 @@ export class DwListItem extends LitElement {
         }
 
         :host(:focus)::before,
-        :host(:focus:hover)::before {
+        :host(:focus:hover)::before,
+        :host(:focus-within)::before,
+        :host(:focus-within:hover)::before {
+          opacity: 0.12;
+        }
+
+        /* This for IE/Edge browser */
+        :host([focus])::before,
+        :host([focus]:hover)::before,
+        :host([focus-within])::before,
+        :host([focus-within]:hover)::before {
           opacity: 0.12;
         }
 
         :host(:focus[selected]:not([disabled]))::before,
-        :host(:focus[selected]:not([disabled]):hover)::before{
+        :host(:focus[selected]:not([disabled]):hover)::before,
+        :host(:focus-within[selected]:not([disabled]))::before,
+        :host(:focus-within[selected]:not([disabled]):hover)::before{
+          opacity: 0.24;
+        }
+
+         /* This for IE/Edge browser */
+        :host([focus][selected]:not([disabled]))::before,
+        :host([focus][selected]:not([disabled]):hover)::before,
+        :host([focus-within][selected]:not([disabled]))::before,
+        :host([focus-within][selected]:not([disabled]):hover)::before{
           opacity: 0.24;
         }
 
@@ -120,7 +141,7 @@ export class DwListItem extends LitElement {
           pointer-events: none;
         }
 
-        :host([disabled]) .item-text-container {
+        :host([disabled]:not([selectionMode='none'])) .item-text-container {
           color: var(--mdc-theme-text-disabled, rgba(0,0,0,0.38));
         }
 
@@ -209,10 +230,10 @@ export class DwListItem extends LitElement {
       /**
        * Input property
        * Defines whether selection should be toggles or force select
-       * Possible values: `toggle` & `default`
+       * Possible values: `toggle` & `default` & `none`
        * Default value is `default`
        */
-      selectionMode: { type: String },
+      selectionMode: { type: String, reflect: true },
 
       /**
        * Input/Output property
@@ -250,6 +271,26 @@ export class DwListItem extends LitElement {
 
   get disabled() { 
     return this._disabled;
+  }
+
+  set selectionMode(value) { 
+    if(value === this._selectionMode){
+      return;
+    }
+
+    if(value === 'none'){
+      this.selected = false;
+    }
+
+    this.disabled = value === 'none';
+
+    let oldValue = this._selectionMode;
+    this._selectionMode = value;
+    this.requestUpdate('selectionMode', oldValue);
+  }
+
+  get selectionMode() { 
+    return this._selectionMode;
   }
 
   constructor(){
