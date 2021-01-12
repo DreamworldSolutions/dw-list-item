@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/DreamworldSolutions/dw-list-item#readme",
   "dependencies": {
-    "@dreamworld/dw-icon": "^1.1.0",
-    "@dreamworld/dw-ripple": "^1.1.0",
+    "@dreamworld/dw-icon": "update-mwc",
+    "@dreamworld/dw-ripple": "update-mwc",
     "@dreamworld/flex-layout": "^1.1.0",
     "@dreamworld/material-styles": "^1.1.0",
     "@dreamworld/pwa-helpers": "^1.7.1",
@@ -35,10 +35,6 @@
     "access": "public"
   },
   "resolutions": {
-    "@material/mwc-base": "0.7.0",
-    "@material/base": "3.1.0",
-    "lit-element": "2.3.1",
-    "lit-html": "1.2.1"
   },
   "release": {
     "branches": [
