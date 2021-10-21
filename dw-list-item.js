@@ -321,7 +321,7 @@ export class DwListItem extends LitElement {
    */
   get _leadingIconTemplate(){
     const classes = { 
-      'leading-icon-20-size': this.dense ? true : false,
+      'leading-icon-20-size': this.dense ? true : false, 
       'leading-icon-24-size': !this.dense ? true : false,
     }
 
