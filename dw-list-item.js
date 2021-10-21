@@ -12,6 +12,7 @@ import { html, css } from 'lit-element';
 import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
 import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
+import { classMap } from 'lit-html/directives/class-map';
 
 //These are dw style needed by this element.
 import { Typography } from '@dreamworld/material-styles/typography';
@@ -157,6 +158,18 @@ export class DwListItem extends LitElement {
           bottom: 0px;
           left: 0px;
         }
+
+        .leading-icon-24-size {
+          width: 24px;
+          height: 24px;
+          margin-right: 16px;
+        }
+
+        .leading-icon-20-size {
+          width: 20px;
+          height: 20px;
+          margin-right: 16px;
+        }
       `
     ];
   }
@@ -210,7 +223,7 @@ export class DwListItem extends LitElement {
       /**
        * Input property
        * Defines whether selection should be toggles or force select
-       * Possible values: `toggle` & `default`
+       * Possible values: `toggle`, `default` & `none`.
        * Default value is `default`
        */
       selectionMode: { type: String },
@@ -220,8 +233,13 @@ export class DwListItem extends LitElement {
        * Set to true to show item preselected
        * It will be set to true on click or enter
        */
-      selected: { type: Boolean, reflect: true }
+      selected: { type: Boolean, reflect: true },
 
+      /**
+       * Input property.
+       * `true` if show leading icon.
+       */
+      hasLeadingIcon: { type: Boolean }
     };
   }
 
@@ -272,7 +290,7 @@ export class DwListItem extends LitElement {
       ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
 
       <!-- Leading icon -->
-      ${this.leadingIcon ? this._leadingIconTemplate : ''}
+      ${this.hasLeadingIcon ? this._leadingIconTemplate : ''}
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
@@ -302,8 +320,15 @@ export class DwListItem extends LitElement {
    * Override this function to customize leading icon
    */
   get _leadingIconTemplate(){
+    const classes = { 
+      'leading-icon-20-size': this.dense ? true : false,
+      'leading-icon-24-size': !this.dense ? true : false,
+    }
+
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
+      <div class="${classMap( classes )}">
+        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
+      </div>
     `;
   }
 
@@ -342,7 +367,23 @@ export class DwListItem extends LitElement {
     //Enter
     if (keyCode === 13) { 
       this._selectItem();
+      this._dispatchClickEvent();
     }
+  }
+
+  /**
+   * 
+   * Dispatch `click` event when selection mode is `none`.
+   */
+  _dispatchClickEvent(){
+    if(this.selectionMode !== 'none'){
+      return;
+    }
+
+    this.dispatchEvent(new CustomEvent('click', {
+      bubbles: true,
+      composed: true
+    }));
   }
 
   /**
@@ -382,6 +423,10 @@ export class DwListItem extends LitElement {
    */
   _selectItem() { 
     if (this.disabled) { 
+      return;
+    }
+
+    if(this.selectionMode === 'none'){
       return;
     }
 
