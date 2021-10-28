@@ -381,7 +381,6 @@ export class DwListItem extends LitElement {
     }
 
     this.dispatchEvent(new CustomEvent('click', {
-      bubbles: true,
       composed: true
     }));
   }
@@ -438,7 +437,6 @@ export class DwListItem extends LitElement {
    */
   _triggerSelectionChangedEvent() { 
     let event = new CustomEvent('selection-changed', {
-      bubbles: true,
       composed: true
     });
     
