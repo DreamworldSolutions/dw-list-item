@@ -261,7 +261,13 @@ export class DwListItem extends LitElement {
        * Type of the trailing icon. By default it shows FILLED icon.
        * Possible values: FILLED and OUTLINED
        */
-      trailingIconFont: { type: String }
+      trailingIconFont: { type: String },
+      
+      /**
+       * Input property.
+       * `true` if show trailing icon.
+       */
+      hasTrailingIcon: { type: Boolean }
     };
   }
 
@@ -323,7 +329,7 @@ export class DwListItem extends LitElement {
       </div>
 
       <!-- Trailing Icon -->
-      ${this.trailingIcon ? this._trailingIconTemplate : ''}
+      ${this.hasTrailingIcon ? this._trailingIconTemplate : ''}
     `;
   }
 
