@@ -158,13 +158,13 @@ export class DwListItem extends LitElement {
           left: 0px;
         }
         
-        :host(:not([dense])[hasleadingicon]) .leading-icon-container {
+        :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
           width: 24px;
           height: 24px;
           margin-right: 16px;
         }
 
-        :host([dense][hasleadingicon]) .leading-icon-container {
+        :host([dense][hasLeadingIcon]) .leading-icon-container {
           width: 20px;
           height: 20px;
           margin-right: 16px;
@@ -246,7 +246,7 @@ export class DwListItem extends LitElement {
        * Input property.
        * set to true when item has leading icon.
        */
-      hasLeadingIcon: { type: Boolean, reflect: true, attribute: 'hasleadingicon' },
+      hasLeadingIcon: { type: Boolean, reflect: true },
 
       /**
        * Input property.
