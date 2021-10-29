@@ -247,7 +247,21 @@ export class DwListItem extends LitElement {
        * Input property.
        * `true` if show leading icon.
        */
-      hasLeadingIcon: { type: Boolean }
+      hasLeadingIcon: { type: Boolean },
+
+      /**
+       * Input property.
+       * Type of the leading icon. By default it shows FILLED icon.
+       * Possible values: FILLED and OUTLINED
+       */
+      leadingIconFont: { type: String },
+
+      /**
+       * Input property.
+       * Type of the trailing icon. By default it shows FILLED icon.
+       * Possible values: FILLED and OUTLINED
+       */
+      trailingIconFont: { type: String }
     };
   }
 
@@ -290,6 +304,8 @@ export class DwListItem extends LitElement {
     this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
     this.setAttribute('tabindex', 0);
+    this.leadingIconFont = "FILLED",
+    this.trailingIconFont = "FILLED"
   }
 
   render() {
@@ -335,7 +351,7 @@ export class DwListItem extends LitElement {
 
     return html`
       <div class="${classMap( classes )}">
-        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
+        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" iconFont="${this.leadingIconFont}"></dw-icon>
       </div>
     `;
   }
@@ -346,7 +362,7 @@ export class DwListItem extends LitElement {
    */
   get _trailingIconTemplate(){
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
+      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" iconFont="${this.trailingIconFont}"></dw-icon>
     `;
   }
 
