@@ -12,7 +12,6 @@ import { html, css } from 'lit-element';
 import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
 import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
-import { classMap } from 'lit-html/directives/class-map';
 
 //These are dw style needed by this element.
 import { Typography } from '@dreamworld/material-styles/typography';
@@ -158,14 +157,14 @@ export class DwListItem extends LitElement {
           bottom: 0px;
           left: 0px;
         }
-
-        .leading-icon-24-size {
+        
+        :host(:not([dense])[hasleadingicon]) .leading-icon-container {
           width: 24px;
           height: 24px;
           margin-right: 16px;
         }
 
-        .leading-icon-20-size {
+        :host([dense][hasleadingicon]) .leading-icon-container {
           width: 20px;
           height: 20px;
           margin-right: 16px;
@@ -245,9 +244,9 @@ export class DwListItem extends LitElement {
 
       /**
        * Input property.
-       * `true` if show leading icon.
+       * set to true when item has leading icon.
        */
-      hasLeadingIcon: { type: Boolean },
+      hasLeadingIcon: { type: Boolean, reflect: true, attribute: 'hasleadingicon' },
 
       /**
        * Input property.
@@ -265,7 +264,7 @@ export class DwListItem extends LitElement {
       
       /**
        * Input property.
-       * `true` if show trailing icon.
+       * set to true when item has trailing icon..
        */
       hasTrailingIcon: { type: Boolean }
     };
@@ -350,13 +349,8 @@ export class DwListItem extends LitElement {
    * Override this function to customize leading icon
    */
   get _leadingIconTemplate(){
-    const classes = { 
-      'leading-icon-20-size': this.dense ? true : false, 
-      'leading-icon-24-size': !this.dense ? true : false,
-    }
-
     return html`
-      <div class="${classMap( classes )}">
+      <div class="leading-icon-container">
         <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" iconFont="${this.leadingIconFont}"></dw-icon>
       </div>
     `;
