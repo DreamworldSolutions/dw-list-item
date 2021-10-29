@@ -170,6 +170,14 @@ export class DwListItem extends LitElement {
           height: 20px;
           margin-right: 16px;
         }
+
+        /**
+         * When selectioMode is none we have no need to set foucus color. So override this style.
+         */
+        :host(:focus[selectionMode='none'])::before, 
+        :host(:focus:hover)::before {
+          opacity: 0;
+        }
       `
     ];
   }
