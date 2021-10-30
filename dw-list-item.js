@@ -459,9 +459,7 @@ export class DwListItem extends LitElement {
    * @event Triggers `selection-changed` events
    */
   _triggerSelectionChangedEvent() { 
-    let event = new CustomEvent('selection-changed', {
-      composed: true
-    });
+    let event = new CustomEvent('selection-changed');
     
     this.dispatchEvent(event);
   }
