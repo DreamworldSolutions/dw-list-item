@@ -173,7 +173,6 @@ export class DwListItem extends LitElement {
         /**
          * When selectioMode is none we have no need to set foucus color. So override this style.
          */
-        :host(:focus[selectionMode='none'])::before, 
         :host(:focus:hover)::before {
           opacity: 0;
         }
@@ -351,7 +350,7 @@ export class DwListItem extends LitElement {
   get _leadingIconTemplate(){
     return html`
       <div class="leading-icon-container">
-        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" iconFont="${this.leadingIconFont}"></dw-icon>
+        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" .iconFont="${this.leadingIconFont}"></dw-icon>
       </div>
     `;
   }
@@ -362,7 +361,7 @@ export class DwListItem extends LitElement {
    */
   get _trailingIconTemplate(){
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" iconFont="${this.trailingIconFont}"></dw-icon>
+      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" .iconFont="${this.trailingIconFont}"></dw-icon>
     `;
   }
 
