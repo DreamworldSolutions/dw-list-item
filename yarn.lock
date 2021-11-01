@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@dreamworld/dw-icon@^2.2.0-development.1":
-  version "2.2.0-development.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-icon/-/dw-icon-2.2.0-development.1.tgz#8be28e549d24a9e4fff2396c5e6592fce905431b"
-  integrity sha512-0bfJi4qfpljAzVPAMpf82f4Fp1Uld3jTAJZFrP+57wcZwL9Kf0iES5tay9+Hh/tS2SbPV19ge9R5hI501aCc4g==
+"@dreamworld/dw-icon@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-icon/-/dw-icon-2.2.0.tgz#c3f59e89a36091cca68c17c28b62ffc3f5724c2a"
+  integrity sha512-P0PfiDeJBnScpF62yhs53bUHDtMc9N5a9W/hiTxpxeJvgNi35hLqDc3BuE2oJt0gZEE5VPuGuZ79ioe4L8oUig==
   dependencies:
     "@dreamworld/pwa-helpers" "^1.7.1"
     "@material/mwc-icon" "0.20.0"
