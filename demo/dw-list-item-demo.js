@@ -84,14 +84,14 @@ export class DwListItemDemo extends LitElement{
 
         <dw-list header="With icons">
           ${this._basicItemList.map((item, index) => html`
-            <dw-list-item title1="${item}" leadingIcon="favorite"></dw-list-item>
+            <dw-list-item title1="${item}" hasLeadingIcon leadingIcon="brightness_4" leadingIconFont="OUTLINED"></dw-list-item>
           `)}
         </dw-list>
       </div>
 
         <dw-list header="Disabled">
           ${this._disabledItemList.map((item, index) => html`
-            <dw-list-item disabled title1="${item}" leadingIcon="favorite"></dw-list-item>
+            <dw-list-item disabled title1="${item}" trailingIcon="account_circle" trailingIconFont="OUTLINED"></dw-list-item>
           `)}
         </dw-list>
 

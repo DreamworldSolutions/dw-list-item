@@ -157,6 +157,25 @@ export class DwListItem extends LitElement {
           bottom: 0px;
           left: 0px;
         }
+        
+        :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
+          width: 24px;
+          height: 24px;
+          margin-right: 16px;
+        }
+
+        :host([dense][hasLeadingIcon]) .leading-icon-container {
+          width: 20px;
+          height: 20px;
+          margin-right: 16px;
+        }
+
+        /**
+         * When selectioMode is none we have no need to set foucus color. So override this style.
+         */
+        :host(:focus:hover)::before {
+          opacity: 0;
+        }
       `
     ];
   }
@@ -210,7 +229,7 @@ export class DwListItem extends LitElement {
       /**
        * Input property
        * Defines whether selection should be toggles or force select
-       * Possible values: `toggle` & `default`
+       * Possible values: `toggle`, `default` & `none`.
        * Default value is `default`
        */
       selectionMode: { type: String },
@@ -220,8 +239,33 @@ export class DwListItem extends LitElement {
        * Set to true to show item preselected
        * It will be set to true on click or enter
        */
-      selected: { type: Boolean, reflect: true }
+      selected: { type: Boolean, reflect: true },
 
+      /**
+       * Input property.
+       * set to true when item has leading icon.
+       */
+      hasLeadingIcon: { type: Boolean, reflect: true },
+
+      /**
+       * Input property.
+       * Type of the leading icon. By default it shows FILLED icon.
+       * Possible values: FILLED and OUTLINED
+       */
+      leadingIconFont: { type: String },
+
+      /**
+       * Input property.
+       * Type of the trailing icon. By default it shows FILLED icon.
+       * Possible values: FILLED and OUTLINED
+       */
+      trailingIconFont: { type: String },
+      
+      /**
+       * Input property.
+       * set to true when item has trailing icon..
+       */
+      hasTrailingIcon: { type: Boolean }
     };
   }
 
@@ -264,6 +308,8 @@ export class DwListItem extends LitElement {
     this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
     this.setAttribute('tabindex', 0);
+    this.leadingIconFont = "FILLED",
+    this.trailingIconFont = "FILLED"
   }
 
   render() {
@@ -272,7 +318,7 @@ export class DwListItem extends LitElement {
       ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
 
       <!-- Leading icon -->
-      ${this.leadingIcon ? this._leadingIconTemplate : ''}
+      ${this.hasLeadingIcon ? this._leadingIconTemplate : ''}
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
@@ -281,7 +327,7 @@ export class DwListItem extends LitElement {
       </div>
 
       <!-- Trailing Icon -->
-      ${this.trailingIcon ? this._trailingIconTemplate : ''}
+      ${this.hasTrailingIcon ? this._trailingIconTemplate : ''}
     `;
   }
 
@@ -303,7 +349,9 @@ export class DwListItem extends LitElement {
    */
   get _leadingIconTemplate(){
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}"></dw-icon>
+      <div class="leading-icon-container">
+        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" .iconFont="${this.leadingIconFont}"></dw-icon>
+      </div>
     `;
   }
 
@@ -313,7 +361,7 @@ export class DwListItem extends LitElement {
    */
   get _trailingIconTemplate(){
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}"></dw-icon>
+      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" .iconFont="${this.trailingIconFont}"></dw-icon>
     `;
   }
 
@@ -342,7 +390,22 @@ export class DwListItem extends LitElement {
     //Enter
     if (keyCode === 13) { 
       this._selectItem();
+      this._dispatchClickEvent();
     }
+  }
+
+  /**
+   * 
+   * Dispatch `click` event when selection mode is `none`.
+   */
+  _dispatchClickEvent(){
+    if(this.selectionMode !== 'none'){
+      return;
+    }
+
+    this.dispatchEvent(new CustomEvent('click', {
+      composed: true
+    }));
   }
 
   /**
@@ -385,6 +448,10 @@ export class DwListItem extends LitElement {
       return;
     }
 
+    if(this.selectionMode === 'none'){
+      return;
+    }
+
     this.selected = this.selectionMode === 'toggle' ? !this.selected : true;
   }
 
@@ -392,10 +459,7 @@ export class DwListItem extends LitElement {
    * @event Triggers `selection-changed` events
    */
   _triggerSelectionChangedEvent() { 
-    let event = new CustomEvent('selection-changed', {
-      bubbles: true,
-      composed: true
-    });
+    let event = new CustomEvent('selection-changed');
     
     this.dispatchEvent(event);
   }
