@@ -66,3 +66,4 @@ npm install --save @dreamworld/dw-list-item
 | --mdc-theme-text-secondary | Sub title's text color. Default is `rgba(0, 0, 0, 0.6)` |
 | --mdc-theme-text-disabled | Disabled text color when item is disabled. Default is `rgba(0, 0, 0, 0.38)` |
 | --dw-icon-color | Icon color in `normal` mode. Default is `rgba(0, 0, 0, 0.38)` In `selection` mode `--mdc-theme-primary` color will be used |
+ 
