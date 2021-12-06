@@ -78,7 +78,7 @@ export class DwListItemDemo extends LitElement{
       <div>
         <dw-list header="Multi line">
           ${this._multiItemList.map((item, index) => html`
-            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title2="9 Jan 2018"></dw-list-item>
+            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title1Tooltip="${item} tooltip" title2Tooltip="tooltip 2 demo" title2="9 Jan 2018"></dw-list-item>
           `)}
         </dw-list>
 

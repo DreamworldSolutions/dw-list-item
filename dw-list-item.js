@@ -18,6 +18,9 @@ import { Typography } from '@dreamworld/material-styles/typography';
 import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
 import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
 
+import { isTouchDevice } from '@dreamworld/web-util/isTouchDevice';
+import '@dreamworld/dw-tooltip/dw-tooltip.js';
+
 export class DwListItem extends LitElement { 
   static get styles() {
     return [
@@ -260,12 +263,45 @@ export class DwListItem extends LitElement {
        * Possible values: FILLED and OUTLINED
        */
       trailingIconFont: { type: String },
-
+      
       /**
        * Input property.
        * set to true when item has trailing icon..
        */
-      hasTrailingIcon: { type: Boolean }
+      hasTrailingIcon: { type: Boolean },
+
+      /**
+       * Input property.
+       * title1's Tooltip text.
+       */
+      title1Tooltip: {
+        type: String
+      },
+      
+      /**
+       * Input property.
+       * title2's Tooltip text.
+       */
+      title2Tooltip: {
+        type: String
+      },
+
+      /**
+       * Input property.
+       * Tooltip css.
+       */
+      tooltipTheme: {
+        type: String
+      },
+
+      /**
+       * When it is `true` don't apply hover effect.
+       */
+      _touchDevice: {
+        type: Boolean, 
+        reflect: true, 
+        attribute: 'touch-device'
+      }
     };
   }
 
@@ -310,6 +346,8 @@ export class DwListItem extends LitElement {
     this.setAttribute('tabindex', 0);
     this.leadingIconFont = "FILLED",
     this.trailingIconFont = "FILLED"
+    this._touchDevice = isTouchDevice();
+    this.tooltipTheme = "material";
   }
 
   render() {
@@ -322,8 +360,30 @@ export class DwListItem extends LitElement {
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
-        <div class="primary-text subtitle1 ellipses">${this.title1}</div>
-        ${this.title2 && this.twoLine ? html`<div class="secondary-text body2 ellipses">${this.title2}</div>` : ''}
+        <div id="title1" class="primary-text subtitle1 ellipses">${this.title1}</div>
+        ${this.title1Tooltip && !isTouchDevice() ? html`
+          <dw-tooltip
+            .for=${"title1"}
+            .trigger=${"mouseenter"}
+            .offset=${[0, 8]}
+            .extraOptions=${{ delay: [500, 0] }}
+            .content=${this.title1Tooltip}
+            .theme=${this.tooltipTheme}>
+          </dw-tooltip>` 
+        : ``}
+        ${this.title2 && this.twoLine ? html`
+          <div id="title2" class="secondary-text body2 ellipses">${this.title2}</div>
+          ${this.title2Tooltip && !isTouchDevice() ? html`
+            <dw-tooltip
+              .for=${"title2"}
+              .trigger=${"mouseenter"}
+              .offset=${[0, 8]}
+              .extraOptions=${{ delay: [500, 0] }}
+              .content=${this.title2Tooltip}
+              .theme=${this.tooltipTheme}>
+            </dw-tooltip>` 
+          : ``} ` 
+        : ''}
       </div>
 
       <!-- Trailing Icon -->
