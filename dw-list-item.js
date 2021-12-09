@@ -277,6 +277,12 @@ export class DwListItem extends LitElement {
        * When ellipsis is active for title2, show content into tooltip.
        */
       _tooltipTitle2: { type: String },
+
+      /**
+       * Input property.
+       * use to set placement of tooltip.
+       */
+      tooltipPlacement : { type: String }
     };
   }
 
@@ -345,7 +351,8 @@ export class DwListItem extends LitElement {
           <dw-tooltip 
             .for=${"title1"}
             .content=${this._tooltipTitle1} 
-            .extraOptions=${{delay: [500, 0]}}>
+            .extraOptions=${{delay: [500, 0]}}
+            .placement=${this.tooltipPlacement}>
           </dw-tooltip>
         ` : ''}
         ${this.title2 && this.twoLine ? html`
@@ -354,7 +361,8 @@ export class DwListItem extends LitElement {
             <dw-tooltip 
               .for=${"title2"}
               .content=${this._tooltipTitle2} 
-              .extraOptions=${{delay: [500, 0]}}>
+              .extraOptions=${{delay: [500, 0]}}
+              .placement=${this.tooltipPlacement}>
             </dw-tooltip>
           ` : ''}
         ` : ''}
