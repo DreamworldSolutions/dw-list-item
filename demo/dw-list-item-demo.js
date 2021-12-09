@@ -50,9 +50,9 @@ export class DwListItemDemo extends LitElement{
   constructor(){
     super();
     this._clickIndex = -1;
-    this._basicItemList = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5'];
+    this._basicItemList = ['show tooltip on hover of title1 if ellipsis applied to title1. hover to see the tooltip', 'Item2', 'Item3', 'Item4', 'Item5'];
     this._denseItemList = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5'];
-    this._multiItemList = ['Item1', 'Item2', 'Item3', 'Item4'];
+    this._multiItemList = ['Item1', 'Item2', 'show tooltip on hover of title1 if ellipsis applied to title1. hover to see the tooltip', 'Item4'];
     this._disabledItemList = ['Item1','Item2'];
   }
 
@@ -78,7 +78,7 @@ export class DwListItemDemo extends LitElement{
       <div>
         <dw-list header="Multi line">
           ${this._multiItemList.map((item, index) => html`
-            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title2="9 Jan 2018"></dw-list-item>
+            <dw-list-item leadingIcon="favorite" twoLine title1="${item}" title2="show tooltip on hover of title2 if ellipsis applied to title2. hover to see the tooltip"></dw-list-item>
           `)}
         </dw-list>
 
