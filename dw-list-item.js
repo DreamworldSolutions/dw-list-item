@@ -12,6 +12,7 @@ import { html, css } from 'lit-element';
 import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
 import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
+import '@dreamworld/dw-tooltip';
 
 //These are dw style needed by this element.
 import { Typography } from '@dreamworld/material-styles/typography';
@@ -265,7 +266,23 @@ export class DwListItem extends LitElement {
        * Input property.
        * set to true when item has trailing icon..
        */
-      hasTrailingIcon: { type: Boolean }
+      hasTrailingIcon: { type: Boolean },
+
+      /**
+       * When ellipsis is active for title1, show content into tooltip.
+       */
+      _tooltipTitle1: { type: String },
+
+      /**
+       * When ellipsis is active for title2, show content into tooltip.
+       */
+      _tooltipTitle2: { type: String },
+
+      /**
+       * Input property.
+       * use to set placement of tooltip.
+       */
+      tooltipPlacement : { type: String }
     };
   }
 
@@ -312,6 +329,13 @@ export class DwListItem extends LitElement {
     this.trailingIconFont = "FILLED"
   }
 
+  updated(changedProps) {
+    super.updated(changedProps);
+    if (changedProps.has('title1') || changedProps.has('title2')) {
+      this._setTooltipText();
+    }
+  }
+
   render() {
     return html`
 
@@ -322,8 +346,26 @@ export class DwListItem extends LitElement {
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
-        <div class="primary-text subtitle1 ellipses">${this.title1}</div>
-        ${this.title2 && this.twoLine ? html`<div class="secondary-text body2 ellipses">${this.title2}</div>` : ''}
+        <div id="title1" class="primary-text subtitle1 ellipses">${this.title1}</div>
+        ${this._tooltipTitle1 ? html`
+          <dw-tooltip 
+            .for=${"title1"}
+            .content=${this._tooltipTitle1} 
+            .extraOptions=${{delay: [500, 0]}}
+            .placement=${this.tooltipPlacement}>
+          </dw-tooltip>
+        ` : ''}
+        ${this.title2 && this.twoLine ? html`
+          <div id="title2" class="secondary-text body2 ellipses">${this.title2}</div>
+          ${this._tooltipTitle2 ? html`
+            <dw-tooltip 
+              .for=${"title2"}
+              .content=${this._tooltipTitle2} 
+              .extraOptions=${{delay: [500, 0]}}
+              .placement=${this.tooltipPlacement}>
+            </dw-tooltip>
+          ` : ''}
+        ` : ''}
       </div>
 
       <!-- Trailing Icon -->
@@ -464,6 +506,17 @@ export class DwListItem extends LitElement {
     this.dispatchEvent(event);
   }
 
+  /**
+   * @return {String} `title1` if ellipsis applied to title1 or `title2` if ellipsis applied to title2.
+   * @protected
+   */
+   _setTooltipText() {
+    const title1Tooltip = this.renderRoot.querySelector('.primary-text');
+    this._tooltipTitle1 = title1Tooltip && (title1Tooltip.offsetWidth < title1Tooltip.scrollWidth) ? this.title1 : '';
+
+    const title2Tooltip = this.renderRoot.querySelector('.secondary-text');
+    this._tooltipTitle2 = title2Tooltip && (title2Tooltip.offsetWidth < title2Tooltip.scrollWidth) ? this.title2 : '';
+  }
 }
 
 window.customElements.define('dw-list-item', DwListItem);
