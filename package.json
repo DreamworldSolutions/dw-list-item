@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/DreamworldSolutions/dw-list-item#readme",
   "dependencies": {
-    "@dreamworld/dw-icon": "^2.2.3-development.1",
+    "@dreamworld/dw-icon": "^2.2.3-development.2",
     "@dreamworld/dw-ripple": "^2.2.3-development.1",
     "@dreamworld/dw-tooltip": "^2.1.1",
     "@dreamworld/flex-layout": "^1.1.0",
