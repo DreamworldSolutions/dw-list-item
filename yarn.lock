@@ -23,28 +23,29 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@dreamworld/dw-icon@^2.2.3-development.2":
-  version "2.2.3-development.2"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-icon/-/dw-icon-2.2.3-development.2.tgz#7d354c2ef64d4bf1c6caba3f4a4253677e5326da"
-  integrity sha512-qDa/abAq1gfqYib3T9iQMbawzd5dTsQx8XRI8ewz7RTWVKtfkSsdwgUV1UTBNrxd0bwMkkRCdBJL0m3EAJlWog==
+"@dreamworld/dw-icon@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-icon/-/dw-icon-2.3.0.tgz#9680556008d07d6c7633c4e7694859449aaf07d5"
+  integrity sha512-qUU8ntMxuD8yuIuX31YYGlhPcWm1ZX2Rvf3DWieEgNNrYZoMez1zwZ2xAGRrXoOsuwfdcMFAfkPzsmsihlvKIA==
   dependencies:
     "@dreamworld/pwa-helpers" "^1.7.1"
     "@material/mwc-icon" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-ripple@^2.2.3-development.1":
-  version "2.2.3-development.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.2.3-development.1.tgz#fa96fb02a5cbe74c465de4023739b5ba14d1b11b"
-  integrity sha512-vqCWCZNQB3QVzs3iSWuqzh6hJJvdItssMG31bBh3f0+DidY6Fw7hjxcqwtJVb/mna97NYgbHKMsmbeb5yAnSbQ==
+"@dreamworld/dw-ripple@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.3.0.tgz#2f995f604dbfec5dcd3998b9bc4e83dd4fb33491"
+  integrity sha512-qU35HmCv44GfDUuKhrYbP/mucZ7dP0gq4LDw+j1UuhZbC4+Z6cnR247pyujfCCFnwiYB1QpuM6rRRp/Sd83WWw==
   dependencies:
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-tooltip@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-tooltip/-/dw-tooltip-2.1.1.tgz#d27bdded78c34cf3124111d2f52718755ce703b6"
-  integrity sha512-oQ+zQR9VDlMejcfeO5oPIbSogtZGVNDfzMNFpS2x1iPpi64xc8L1LiYCGF94f2CVPPk/JIB3eGR3G3Y3ABPOLw==
+"@dreamworld/dw-tooltip@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-tooltip/-/dw-tooltip-2.3.0.tgz#d870aa9beee95e9bfd25696ba801517cb2112896"
+  integrity sha512-AU5tGYN98mDzHRDse1ONF9HrT1iS1PCN+O2tUqnm8i4yBGIQtW4qkiUedsBy2391pabWBUERNWJUBoBrUq5wcQ==
   dependencies:
+    "@dreamworld/material-styles" "^2.1.0"
     "@dreamworld/pwa-helpers" "^1.7.1"
     lit-element "^2.2.0"
     tippy.js "^6.2.7"
@@ -62,6 +63,13 @@
   integrity sha512-vxYOA6s0vRj7Un3ckgMk/ntmvzNI9TUJHVEukD2YqYt/Es6fInHkSI7DjZjUg4FZPVN28ws+NjLzr+C/BcJ4yg==
   dependencies:
     "@polymer/font-roboto" "^3.0.2"
+    lit-element "^2.2.0"
+
+"@dreamworld/material-styles@^2.1.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/material-styles/-/material-styles-2.2.0.tgz#45d232cdd1b9b063a447d96316c9f9f08a16f5c4"
+  integrity sha512-26ZnFaTZD0NdehrSuzJ7J1PLGv+Mo/rNVGegwIAlT49c3/c3rLJ6DbRfaTLAu4cKO2JWwkcZ01unywQet1QiOQ==
+  dependencies:
     lit-element "^2.2.0"
 
 "@dreamworld/pwa-helpers@^1.7.1":
