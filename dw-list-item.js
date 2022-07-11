@@ -129,13 +129,14 @@ export class DwListItem extends LitElement {
 
         :host([dense]) {
           height: 40px;
+          --mdc-icon-size: 20px;
         }
 
         :host([dense]) .list-item__icon {
           margin-left: 0;
           margin-right: 36px;
-          width: 20px;
-          height: 20px;
+          width: var(--mdc-icon-size);
+          height: var(--mdc-icon-size);
         }
 
         :host([twoline]) {
@@ -161,14 +162,14 @@ export class DwListItem extends LitElement {
         }
         
         :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
-          width: 24px;
-          height: 24px;
+          width: var(--mdc-icon-size);
+          height: var(--mdc-icon-size);
           margin-right: 16px;
         }
 
         :host([dense][hasLeadingIcon]) .leading-icon-container {
-          width: 20px;
-          height: 20px;
+          width: var(--mdc-icon-size);
+          height: var(--mdc-icon-size);
           margin-right: 16px;
         }
 
@@ -437,7 +438,7 @@ export class DwListItem extends LitElement {
   get _leadingIconTemplate(){
     return html`
       <div class="leading-icon-container">
-        <dw-icon .size="${this.dense ? 20 : 24}" class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" .iconFont="${this.leadingIconFont}"></dw-icon>
+        <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" .iconFont="${this.leadingIconFont}"></dw-icon>
       </div>
     `;
   }
@@ -448,7 +449,7 @@ export class DwListItem extends LitElement {
    */
   get _trailingIconTemplate(){
     return html`
-      <dw-icon .size="${this.dense ? 20 : 24}" class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" .iconFont="${this.trailingIconFont}"></dw-icon>
+      <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" .iconFont="${this.trailingIconFont}"></dw-icon>
     `;
   }
 
