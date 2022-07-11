@@ -134,8 +134,8 @@ export class DwListItem extends LitElement {
         :host([dense]) .list-item__icon {
           margin-left: 0;
           margin-right: 36px;
-          width: var(--mdc-icon-size);
-          height: var(--mdc-icon-size);
+          width: var(--mdc-icon-size, 20px);
+          height: var(--mdc-icon-size, 20px);
         }
 
         :host([twoline]) {
@@ -161,14 +161,14 @@ export class DwListItem extends LitElement {
         }
         
         :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
-          width: var(--mdc-icon-size);
-          height: var(--mdc-icon-size);
+          width: var(--mdc-icon-size, 24px);
+          height: var(--mdc-icon-size, 24px);
           margin-right: 16px;
         }
 
         :host([dense][hasLeadingIcon]) .leading-icon-container {
-          width: var(--mdc-icon-size);
-          height: var(--mdc-icon-size);
+          width: var(--mdc-icon-size, 20px);
+          height: var(--mdc-icon-size, 20px);
           margin-right: 16px;
         }
 
