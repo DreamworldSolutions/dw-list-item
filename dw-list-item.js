@@ -99,7 +99,8 @@ export class DwListItem extends LitElement {
         }
 
         :host(:focus)::before,
-        :host(:focus:hover)::before {
+        :host(:focus:hover)::before,
+        :host([activated])::before {
           opacity: 0.12;
         }
 
@@ -184,7 +185,6 @@ export class DwListItem extends LitElement {
 
   static get properties() {
     return {
-      
       /**
        * Input property (Mandatory)
        * Item's text to be shown
@@ -220,7 +220,7 @@ export class DwListItem extends LitElement {
        * Input property
        * Set to true to show twoLine item
        */
-      twoLine: { type: Boolean, reflect: true},
+      twoLine: { type: Boolean, reflect: true },
 
       /**
        * Input property
@@ -262,7 +262,7 @@ export class DwListItem extends LitElement {
        * Possible values: FILLED and OUTLINED
        */
       trailingIconFont: { type: String },
-      
+
       /**
        * Input property.
        * set to true when item has trailing icon..
@@ -290,6 +290,19 @@ export class DwListItem extends LitElement {
        * Set it to true to show ripples on the selected item.
        */
       showSelectedRipple : { type: Boolean },
+
+      /**
+       * Whether or not list-item is focusable.
+       * Default `true`
+       */
+      focusable: { type: Boolean },
+
+      /**
+       * Whether or not list-item is activated.
+       * same style as focused.
+       * default `false`
+       */
+      activated: { type: Boolean },
     };
   }
 
@@ -321,6 +334,22 @@ export class DwListItem extends LitElement {
     return this._disabled;
   }
 
+  set focusable(value) {
+    let oldValue = this._focusable;
+    if(value === oldValue) {
+      return;
+    }
+
+    value ? this.setAttribute('tabindex', 0) : this.removeAttribute('tabindex');
+
+    this._focusable = value;
+    this.requestUpdate('focusable', oldValue)
+  }
+
+  get focusable() {
+    return this._focusable;
+  }
+
   constructor(){
     super();
 
@@ -331,9 +360,9 @@ export class DwListItem extends LitElement {
     this.selected = false;
     this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
-    this.setAttribute('tabindex', 0);
-    this.leadingIconFont = "FILLED",
-    this.trailingIconFont = "FILLED"
+    this.leadingIconFont = "FILLED";
+    this.trailingIconFont = "FILLED";
+    this.focusable = true;
   }
 
   updated(changedProps) {
