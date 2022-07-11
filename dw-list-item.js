@@ -353,7 +353,7 @@ export class DwListItem extends LitElement {
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
-        <div id="title1" class="primary-text subtitle1 ellipses">${this.title1}</div>
+        <div id="title1" class="primary-text subtitle1 ellipses">${this.title1Template}</div>
         ${this._tooltipTitle1 ? html`
           <dw-tooltip 
             .for=${"title1"}
@@ -363,7 +363,7 @@ export class DwListItem extends LitElement {
           </dw-tooltip>
         ` : ''}
         ${this.title2 && this.twoLine ? html`
-          <div id="title2" class="secondary-text body2 ellipses">${this.title2}</div>
+          <div id="title2" class="secondary-text body2 ellipses">${this.title2Template}</div>
           ${this._tooltipTitle2 ? html`
             <dw-tooltip 
               .for=${"title2"}
@@ -378,6 +378,22 @@ export class DwListItem extends LitElement {
       <!-- Trailing Icon -->
       ${this.hasTrailingIcon ? this._trailingIconTemplate : ''}
     `;
+  }
+
+  get title1Template() {
+    if(this.title1) {
+      return html`${this.title1}`
+    }
+
+    return html`<slot name="title1"></slot>`
+  }
+
+  get title2Template() {
+    if(this.title2) {
+      return html`${this.title2}`
+    }
+
+    return html`<slot name="title2"></slot>`
   }
 
   connectedCallback() { 
