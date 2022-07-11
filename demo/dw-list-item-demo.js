@@ -34,6 +34,10 @@ export class DwListItemDemo extends LitElement{
           flex:1
         }
 
+        span {
+          background-color: #FDE293;
+        }
+
       `
     ];
   }
@@ -64,7 +68,7 @@ export class DwListItemDemo extends LitElement{
             <dw-list-item title1="${item}"></dw-list-item>
           `)}
           <dw-list-item disabled title1="test"></dw-list-item>
-          <dw-list-item title1="test"></dw-list-item>
+          <dw-list-item ><div slot="title1">Hello <span>World</span></div></dw-list-item>
           
         </dw-list>
 
