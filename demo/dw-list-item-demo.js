@@ -34,6 +34,9 @@ export class DwListItemDemo extends LitElement{
           flex:1
         }
 
+        .regular-icon {
+          --mdc-icon-size: 24px;
+        }
       `
     ];
   }
@@ -85,6 +88,20 @@ export class DwListItemDemo extends LitElement{
         <dw-list header="With icons">
           ${this._basicItemList.map((item, index) => html`
             <dw-list-item title1="${item}" hasLeadingIcon leadingIcon="brightness_4" leadingIconFont="OUTLINED"></dw-list-item>
+          `)}
+        </dw-list>
+      </div>
+      
+      <div>
+        <dw-list header="Dense with icons (icon size 24px)">
+          ${this._basicItemList.map((item, index) => html`
+            <dw-list-item dense class="regular-icon" title1="${item}" hasLeadingIcon leadingIcon="brightness_4" leadingIconFont="OUTLINED"></dw-list-item>
+          `)}
+        </dw-list>
+
+        <dw-list header="Dense with icons (icon size 20px)">
+          ${this._basicItemList.map((item, index) => html`
+            <dw-list-item dense title1="${item}" hasLeadingIcon leadingIcon="brightness_4" leadingIconFont="OUTLINED"></dw-list-item>
           `)}
         </dw-list>
       </div>
