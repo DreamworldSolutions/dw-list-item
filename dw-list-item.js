@@ -339,7 +339,7 @@ export class DwListItem extends LitElement {
   render() {
     return html`
 
-      ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
+      ${this.disabled ? '' : html`<dw-ripple .primary=${this.selected}></dw-ripple>`}
 
       <!-- Leading icon -->
       ${this.hasLeadingIcon ? this._leadingIconTemplate : ''}
