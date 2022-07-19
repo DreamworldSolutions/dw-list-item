@@ -510,7 +510,8 @@ export class DwListItem extends LitElement {
     if (keyCode === 40) {
       // To prevent browser's scroll up/down
       e.preventDefault();
-      this._focusNextElement(e.target.nextElementSibling);
+      let nextFocusableElement = this._getNextFocusableElement(e.target);
+      this._focusNextElement(nextFocusableElement);
       return;
     }
 
@@ -518,7 +519,8 @@ export class DwListItem extends LitElement {
     if (keyCode === 38) {
       // To prevent browser's scroll up/down
       e.preventDefault();
-      this._focusPreviousElement(e.target.previousElementSibling);
+      let previousFocusableElement = this._getPreviousFocusableElement(e.target);
+      this._focusPreviousElement(previousFocusableElement);
       return;
     }
 
@@ -529,6 +531,39 @@ export class DwListItem extends LitElement {
     }
   }
 
+  _getNextFocusableElement(el) {
+    if(el.nextElementSibling && (el.nextElementSibling.hasAttribute('opened') || el.nextElementSibling.hasAttribute('hasChild'))) {
+      return el.nextElementSibling.children[0];
+    }
+
+    if(el.nextElementSibling) {
+      return el.nextElementSibling 
+    }
+
+    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+      return el.parentElement.nextElementSibling;
+    }
+    
+    return el;
+  }
+
+  _getPreviousFocusableElement(el) {
+    if(el.previousElementSibling && (el.previousElementSibling.hasAttribute('opened') || el.previousElementSibling.hasAttribute('hasChild'))) {
+      let lastChildren = el.previousElementSibling.children.length -1;
+      return el.previousElementSibling.children[lastChildren];
+    }
+
+    if(el.previousElementSibling) {
+      return el.previousElementSibling 
+    }
+
+    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+      return el.parentElement.previousElementSibling;
+    }
+    
+    return el;
+  }
+  
   /**
    *
    * Dispatch `click` event when selection mode is `none`.
@@ -553,12 +588,13 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (!el.disabled) {
-      el.focus && el.focus();
+    if (el.hasAttribute("disabled") || el.disabled) { 
+      let nextFocusableElement = this._getNextFocusableElement(el);
+      this._focusNextElement(nextFocusableElement);
       return;
     }
 
-    this._focusNextElement(el.nextElementSibling);
+    el.focus && el.focus();
   }
 
   /**
@@ -569,12 +605,13 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (!el.disabled) {
-      el.focus && el.focus();
+    if (el.hasAttribute("disabled") || el.disabled) { 
+      let previousFocusableElement = this._getPreviousFocusableElement(el);
+      this._focusPreviousElement(previousFocusableElement);
       return;
     }
 
-    this._focusPreviousElement(el.previousElementSibling);
+    el.focus && el.focus();
   }
 
   /**

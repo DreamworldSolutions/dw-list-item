@@ -40,6 +40,12 @@ export class DwListItemDemo extends LitElement {
         span {
           background-color: #fde293;
         }
+
+        .child-items {
+          display: flex;
+          flex-direction: column;
+          padding-left: 16px;
+        }
       `,
     ];
   }
@@ -156,17 +162,38 @@ export class DwListItemDemo extends LitElement {
       </div>
 
       <dw-list header="Disabled">
-        ${this._disabledItemList.map(
-          (item, index) => html`
-            <dw-list-item
-              disabled
-              title1="${item}"
-              trailingIcon="account_circle"
-              trailingIconFont="OUTLINED"
-            ></dw-list-item>
-          `
-        )}
+        ${this._disabledItemList.map((item, index) => html`
+          <dw-list-item disabled title1="${item}" trailingIcon="account_circle" trailingIconFont="OUTLINED"></dw-list-item>
+        `)}
       </dw-list>
+
+      <div>
+        <dw-list header="Child item with focus traversal">
+          ${this._denseItemList.map((item, index) => html`
+            <dw-list-item title1="${item}"></dw-list-item>
+            ${index === 2 ? html`
+              <div class="child-items" hasChild>
+                ${this._disabledItemList.map((item, index) => html`
+                  <dw-list-item  title1="${item}"></dw-list-item>
+                `)}
+              </div>
+            ` : ``}
+          `)}
+        </dw-list>
+
+        <dw-list header="Disabled child item">
+          ${this._denseItemList.map((item, index) => html`
+            <dw-list-item title1="${item}"></dw-list-item>
+            ${index === 2 ? html`
+              <div class="child-items" hasChild>
+                ${this._disabledItemList.map((item, index) => html`
+                  <dw-list-item disabled title1="${item}"></dw-list-item>
+                `)}
+              </div>
+            ` : ``}
+          `)}
+        </dw-list>
+      </div>
     `;
   }
 }
