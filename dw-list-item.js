@@ -283,7 +283,13 @@ export class DwListItem extends LitElement {
        * Input property.
        * use to set placement of tooltip.
        */
-      tooltipPlacement : { type: String }
+      tooltipPlacement : { type: String },
+
+      /**
+       * Input property.
+       * Set it to true to show ripples on the selected item.
+       */
+      showSelectedRipple : { type: Boolean },
     };
   }
 
@@ -340,7 +346,7 @@ export class DwListItem extends LitElement {
   render() {
     return html`
 
-      ${this.disabled ? '' : html`<dw-ripple></dw-ripple>`}
+      ${this.disabled ? '' : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
 
       <!-- Leading icon -->
       ${this.hasLeadingIcon ? this._leadingIconTemplate : ''}
