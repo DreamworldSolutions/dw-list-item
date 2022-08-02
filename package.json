@@ -28,7 +28,8 @@
     "@dreamworld/flex-layout": "^1.1.0",
     "@dreamworld/material-styles": "^1.1.0",
     "@dreamworld/pwa-helpers": "^1.7.1",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.1"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.1",

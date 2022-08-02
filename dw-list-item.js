@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { html, css } from 'lit-element';
 import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
 import '@dreamworld/dw-tooltip';
@@ -178,6 +179,12 @@ export class DwListItem extends LitElement {
         :host(:focus:hover)::before {
           opacity: 0;
         }
+
+        .highlight {
+          color: var(--dw-select-highlight-text-color);
+          background-color: var(--dw-select-highlight-bg-color);
+          font-weight: var(--dw-select-highlight-font-weight);
+        }
       `
     ];
   }
@@ -296,6 +303,11 @@ export class DwListItem extends LitElement {
        * default `false`
        */
       activated: { type: Boolean },
+
+      /**
+       * Highlight words
+       */
+      highlight: { type: String }
     };
   }
 
@@ -404,7 +416,7 @@ export class DwListItem extends LitElement {
 
   get title1Template() {
     if(this.title1) {
-      return html`${this.title1}`
+      return html`${unsafeHTML(this._getTitle(this.title1))}`
     }
 
     return html`<slot name="title1"></slot>`
@@ -561,6 +573,16 @@ export class DwListItem extends LitElement {
 
     const title2Tooltip = this.renderRoot.querySelector('.secondary-text');
     this._tooltipTitle2 = title2Tooltip && (title2Tooltip.offsetWidth < title2Tooltip.scrollWidth) ? this.title2 : '';
+  }
+
+  /**
+   * Convert text into HTML Template with Highlight text using query string
+   * @param {String} text 
+   * @returns {HTMLTemplateElement} 
+   */
+  _getTitle(text) {
+    let regex = new RegExp(`(${this.highlight})`, "gi");
+    return text.replace(regex, `<span class="highlight">$1</span>`)
   }
 }
 
