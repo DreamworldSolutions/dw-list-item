@@ -37,6 +37,10 @@ export class DwListItemDemo extends LitElement{
         .regular-icon {
           --mdc-icon-size: 24px;
         }
+
+        span {
+          background-color: #FDE293;
+        }
       `
     ];
   }
@@ -64,10 +68,11 @@ export class DwListItemDemo extends LitElement{
       <div>
         <dw-list header="Basic">
           ${this._basicItemList.map((item, index) => html`
-            <dw-list-item title1="${item}"></dw-list-item>
+            <dw-list-item title1="${item}" .focusable=${false}></dw-list-item>
           `)}
           <dw-list-item disabled title1="test"></dw-list-item>
-          <dw-list-item title1="test"></dw-list-item>
+          <dw-list-item activated><div slot="title1">Hello <span>World</span></div></dw-list-item>
+          <dw-list-item title1="Dream World, dreamworld !" .highlight=${"dream"}></dw-list-item>
           
         </dw-list>
 
