@@ -72,6 +72,7 @@ export class DwListItemDemo extends LitElement{
           `)}
           <dw-list-item disabled title1="test"></dw-list-item>
           <dw-list-item activated><div slot="title1">Hello <span>World</span></div></dw-list-item>
+          <dw-list-item title1="Dream World, dreamworld !" .highlight=${"dream"}></dw-list-item>
           
         </dw-list>
 
