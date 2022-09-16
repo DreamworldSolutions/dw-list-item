@@ -956,10 +956,10 @@
     "@material/mwc-icon" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-ripple@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.3.0.tgz#2f995f604dbfec5dcd3998b9bc4e83dd4fb33491"
-  integrity sha512-qU35HmCv44GfDUuKhrYbP/mucZ7dP0gq4LDw+j1UuhZbC4+Z6cnR247pyujfCCFnwiYB1QpuM6rRRp/Sd83WWw==
+"@dreamworld/dw-ripple@^2.4.0-development.3":
+  version "2.4.0-development.3"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.4.0-development.3.tgz#84decfafc07b627ae929e50133dfacf2898368da"
+  integrity sha512-BWMDsyo10DOYOGaVEl526DL52BBf1RZQJneRrjcqG9DO6ap3Iu3maSWOuF5wUsO+ykU+LtOTZII89BW0cLegFw==
   dependencies:
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
