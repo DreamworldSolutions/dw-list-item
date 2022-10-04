@@ -1,35 +1,23 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
 
-import { html, css } from 'lit-element';
-import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
+
+import { LitElement, html, css, unsafeCSS } from '@dreamworld/pwa-helpers/lit.js';
 import '@dreamworld/dw-icon';
 import '@dreamworld/dw-ripple';
 import '@dreamworld/dw-tooltip';
 
 //These are dw style needed by this element.
-import { Typography } from '@dreamworld/material-styles/typography';
-import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
-import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
+import { typography } from '@dreamworld/material-styles/typography.js';
 
-export class DwListItem extends LitElement { 
-  static get styles() {
-    return [
-      Typography,
+
+export class DwListItem extends LitElement {
+  static styles = [
+      unsafeCSS(typography),
       css`
         :host{
           user-select: none;
           outline: none;
-          ${displayFlex};
-          ${horizontal};
-          ${centerAligned};
+          display: flex;
+          align-items: center;
           height: 48px;
           position: relative;
           padding: 0 16px;
@@ -51,9 +39,9 @@ export class DwListItem extends LitElement {
         }
 
         .item-text-container {
-          ${displayFlex};
-          ${vertical};
-          ${flexFactor};
+          display: flex;
+          flex-direction: column;
+          flex: 1;
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 
@@ -159,7 +147,7 @@ export class DwListItem extends LitElement {
           bottom: 0px;
           left: 0px;
         }
-        
+
         :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
           width: var(--mdc-icon-size, 24px);
           height: var(--mdc-icon-size, 24px);
@@ -180,11 +168,10 @@ export class DwListItem extends LitElement {
         }
       `
     ];
-  }
 
   static get properties() {
     return {
-      
+
       /**
        * Input property (Mandatory)
        * Item's text to be shown
@@ -262,7 +249,7 @@ export class DwListItem extends LitElement {
        * Possible values: FILLED and OUTLINED
        */
       trailingIconFont: { type: String },
-      
+
       /**
        * Input property.
        * set to true when item has trailing icon..
@@ -293,8 +280,8 @@ export class DwListItem extends LitElement {
     };
   }
 
-  set selected(value) { 
-    if (value === this._selected) { 
+  set selected(value) {
+    if (value === this._selected) {
       return;
     }
 
@@ -304,11 +291,11 @@ export class DwListItem extends LitElement {
     this._triggerSelectionChangedEvent();
   }
 
-  get selected() { 
+  get selected() {
     return this._selected;
   }
 
-  set disabled(value) { 
+  set disabled(value) {
     this.setAttribute('tabindex', -1);
 
     let oldValue = this._disabled;
@@ -317,7 +304,7 @@ export class DwListItem extends LitElement {
     this.requestUpdate('disabled', oldValue);
   }
 
-  get disabled() { 
+  get disabled() {
     return this._disabled;
   }
 
@@ -355,9 +342,9 @@ export class DwListItem extends LitElement {
       <div class="item-text-container ellipses">
         <div id="title1" class="primary-text subtitle1 ellipses">${this.title1}</div>
         ${this._tooltipTitle1 ? html`
-          <dw-tooltip 
+          <dw-tooltip
             .for=${"title1"}
-            .content=${this._tooltipTitle1} 
+            .content=${this._tooltipTitle1}
             .extraOptions=${{delay: [500, 0]}}
             .placement=${this.tooltipPlacement}>
           </dw-tooltip>
@@ -365,9 +352,9 @@ export class DwListItem extends LitElement {
         ${this.title2 && this.twoLine ? html`
           <div id="title2" class="secondary-text body2 ellipses">${this.title2}</div>
           ${this._tooltipTitle2 ? html`
-            <dw-tooltip 
+            <dw-tooltip
               .for=${"title2"}
-              .content=${this._tooltipTitle2} 
+              .content=${this._tooltipTitle2}
               .extraOptions=${{delay: [500, 0]}}
               .placement=${this.tooltipPlacement}>
             </dw-tooltip>
@@ -380,7 +367,7 @@ export class DwListItem extends LitElement {
     `;
   }
 
-  connectedCallback() { 
+  connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this._keydownHandler);
     this.addEventListener('click', this._selectItem);
@@ -422,29 +409,29 @@ export class DwListItem extends LitElement {
 
     //Down Arrows
     if (keyCode === 40) {
-      // To prevent browser's scroll up/down 
+      // To prevent browser's scroll up/down
       e.preventDefault();
       this._focusNextElement(e.target.nextElementSibling);
       return;
     }
 
-    //Up Arrow 
+    //Up Arrow
     if (keyCode === 38) {
-      // To prevent browser's scroll up/down 
+      // To prevent browser's scroll up/down
       e.preventDefault();
       this._focusPreviousElement(e.target.previousElementSibling);
       return;
     }
 
     //Enter
-    if (keyCode === 13) { 
+    if (keyCode === 13) {
       this._selectItem();
       this._dispatchClickEvent();
     }
   }
 
   /**
-   * 
+   *
    * Dispatch `click` event when selection mode is `none`.
    */
   _dispatchClickEvent(){
@@ -460,12 +447,12 @@ export class DwListItem extends LitElement {
   /**
    * Focused next element. It skips disabled element
    */
-  _focusNextElement(el) { 
-    if (!el) { 
+  _focusNextElement(el) {
+    if (!el) {
       return;
     }
 
-    if (!el.disabled) { 
+    if (!el.disabled) {
       el.focus && el.focus();
       return;
     }
@@ -476,24 +463,24 @@ export class DwListItem extends LitElement {
   /**
    * Focused previous element. It skips disabled element
    */
-  _focusPreviousElement(el) { 
-    if (!el) { 
+  _focusPreviousElement(el) {
+    if (!el) {
       return;
     }
 
-    if (!el.disabled) { 
+    if (!el.disabled) {
       el.focus && el.focus();
       return;
     }
 
     this._focusPreviousElement(el.previousElementSibling);
   }
-  
+
   /**
    * Updates selection based on `selectionMode`. Skips if `disabled`.
    */
-  _selectItem() { 
-    if (this.disabled) { 
+  _selectItem() {
+    if (this.disabled) {
       return;
     }
 
@@ -507,9 +494,9 @@ export class DwListItem extends LitElement {
   /**
    * @event Triggers `selection-changed` events
    */
-  _triggerSelectionChangedEvent() { 
+  _triggerSelectionChangedEvent() {
     let event = new CustomEvent('selection-changed');
-    
+
     this.dispatchEvent(event);
   }
 

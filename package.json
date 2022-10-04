@@ -21,13 +21,12 @@
   },
   "homepage": "https://github.com/DreamworldSolutions/dw-list-item#readme",
   "dependencies": {
-    "@dreamworld/dw-icon": "^2.3.0",
+    "@dreamworld/dw-icon": "^3.0.0",
     "@dreamworld/dw-ripple": "^2.3.0",
     "@dreamworld/dw-tooltip": "^2.3.0",
-    "@dreamworld/flex-layout": "^1.1.0",
-    "@dreamworld/material-styles": "^1.1.0",
-    "@dreamworld/pwa-helpers": "^1.7.1",
-    "lit-element": "^2.2.1"
+    "@dreamworld/material-styles": "^2.6.0",
+    "@dreamworld/pwa-helpers": "^1.13.0",
+    "lit": "^2.3.1"
   },
   "devDependencies": {
     "semantic-release": "17.0.8"
@@ -36,7 +35,8 @@
     "access": "public"
   },
   "resolutions": {
-    "tslib": "2.1.0"
+    "tslib": "2.1.0",
+    "lit": "2.3.1"
   },
   "release": {
     "branches": [
