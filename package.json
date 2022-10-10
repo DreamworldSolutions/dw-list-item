@@ -4,6 +4,7 @@
   "description": "",
   "main": "dw-list-item.js",
   "scripts": {
+    "start": "web-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,6 +31,9 @@
     "lit-element": "^2.2.1"
   },
   "devDependencies": {
+    "@open-wc/building-rollup": "^2.0.1",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@web/dev-server": "^0.1.32",
     "semantic-release": "17.0.8"
   },
   "publishConfig": {
