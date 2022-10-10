@@ -8,23 +8,29 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, css } from 'lit-element';
-import { LitElement } from '@dreamworld/pwa-helpers/lit-element.js';
-import '@dreamworld/dw-icon';
-import '@dreamworld/dw-ripple';
-import '@dreamworld/dw-tooltip';
+import { html, css } from "lit-element";
+import { LitElement } from "@dreamworld/pwa-helpers/lit-element.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import "@dreamworld/dw-icon";
+import "@dreamworld/dw-ripple";
+import "@dreamworld/dw-tooltip";
 
 //These are dw style needed by this element.
-import { Typography } from '@dreamworld/material-styles/typography';
-import { displayFlex, horizontal, vertical, flexFactor } from '@dreamworld/flex-layout/flex-layout-literals';
-import { centerAligned } from '@dreamworld/flex-layout/flex-layout-alignment-literals';
+import { Typography } from "@dreamworld/material-styles/typography";
+import {
+  displayFlex,
+  horizontal,
+  vertical,
+  flexFactor,
+} from "@dreamworld/flex-layout/flex-layout-literals";
+import { centerAligned } from "@dreamworld/flex-layout/flex-layout-alignment-literals";
 
-export class DwListItem extends LitElement { 
+export class DwListItem extends LitElement {
   static get styles() {
     return [
       Typography,
       css`
-        :host{
+        :host {
           user-select: none;
           outline: none;
           ${displayFlex};
@@ -35,16 +41,16 @@ export class DwListItem extends LitElement {
           padding: 0 16px;
           overflow: hidden;
           outline: none;
-          cursor:pointer;
+          cursor: pointer;
           position: relative;
-          --dw-icon-color-active: var(--mdc-theme-primary, #6200ee)
+          --dw-icon-color-active: var(--mdc-theme-primary, #6200ee);
         }
 
-        :host([hidden]){
+        :host([hidden]) {
           display: none;
         }
 
-        .ellipses{
+        .ellipses {
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -57,7 +63,7 @@ export class DwListItem extends LitElement {
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 
-        :host([selected]){
+        :host([selected]) {
           color: var(--mdc-theme-primary, #6200ee);
           --dw-icon-color: var(--dw-icon-color-active, #6200ee);
           /* Used by dw-ripple */
@@ -72,7 +78,7 @@ export class DwListItem extends LitElement {
         }
 
         .list-item__icon.trailing-icon,
-        :host([dense]) .list-item__icon.trailing-icon{
+        :host([dense]) .list-item__icon.trailing-icon {
           margin-right: 0;
         }
 
@@ -80,7 +86,7 @@ export class DwListItem extends LitElement {
           color: var(--mdc-theme-text-secondary, rgba(0, 0, 0, 0.54));
         }
 
-        :host(:not([disabled]))::before{
+        :host(:not([disabled]))::before {
           content: "";
           opacity: 0;
           pointer-events: none;
@@ -105,7 +111,7 @@ export class DwListItem extends LitElement {
         }
 
         :host(:focus[selected]:not([disabled]))::before,
-        :host(:focus[selected]:not([disabled]):hover)::before{
+        :host(:focus[selected]:not([disabled]):hover)::before {
           opacity: 0.24;
         }
 
@@ -118,13 +124,13 @@ export class DwListItem extends LitElement {
           opacity: 0.12;
         }
 
-        :host([disabled]){
+        :host([disabled]) {
           cursor: normal;
           pointer-events: none;
         }
 
         :host([disabled]) .item-text-container {
-          color: var(--mdc-theme-text-disabled, rgba(0,0,0,0.38));
+          color: var(--mdc-theme-text-disabled, rgba(0, 0, 0, 0.38));
         }
 
         :host([dense]) {
@@ -153,14 +159,14 @@ export class DwListItem extends LitElement {
          * So, to show ripple we need to make ripple element to fit within host element.
          * Setting important here, because "dw-ripple" elements sets relative position as a inline style on itself in case of parent element is host.
          */
-        dw-ripple{
+        dw-ripple {
           position: absolute !important;
           top: 0px;
           right: 0px;
           bottom: 0px;
           left: 0px;
         }
-        
+
         :host(:not([dense])[hasLeadingIcon]) .leading-icon-container {
           width: var(--mdc-icon-size, 24px);
           height: var(--mdc-icon-size, 24px);
@@ -179,7 +185,13 @@ export class DwListItem extends LitElement {
         :host(:focus:hover)::before {
           opacity: 0;
         }
-      `
+
+        .highlight {
+          color: var(--dw-select-highlight-text-color);
+          background-color: var(--dw-select-highlight-bg-color);
+          font-weight: var(--dw-select-highlight-font-weight);
+        }
+      `,
     ];
   }
 
@@ -265,7 +277,7 @@ export class DwListItem extends LitElement {
 
       /**
        * Input property.
-       * set to true when item has trailing icon..
+       * set to true when item has trailing icon.
        */
       hasTrailingIcon: { type: Boolean },
 
@@ -283,13 +295,13 @@ export class DwListItem extends LitElement {
        * Input property.
        * use to set placement of tooltip.
        */
-      tooltipPlacement : { type: String },
+      tooltipPlacement: { type: String },
 
       /**
        * Input property.
        * Set it to true to show ripples on the selected item.
        */
-      showSelectedRipple : { type: Boolean },
+      showSelectedRipple: { type: Boolean },
 
       /**
        * Whether or not list-item is focusable.
@@ -303,60 +315,65 @@ export class DwListItem extends LitElement {
        * default `false`
        */
       activated: { type: Boolean },
+
+      /**
+       * Highlight words
+       */
+      highlight: { type: String },
     };
   }
 
-  set selected(value) { 
-    if (value === this._selected) { 
+  set selected(value) {
+    if (value === this._selected) {
       return;
     }
 
     let oldValue = this._selected;
     this._selected = value;
-    this.requestUpdate('selected', oldValue);
+    this.requestUpdate("selected", oldValue);
     this._triggerSelectionChangedEvent();
   }
 
-  get selected() { 
+  get selected() {
     return this._selected;
   }
 
-  set disabled(value) { 
-    this.setAttribute('tabindex', -1);
+  set disabled(value) {
+    this.setAttribute("tabindex", -1);
 
     let oldValue = this._disabled;
 
     this._disabled = value;
-    this.requestUpdate('disabled', oldValue);
+    this.requestUpdate("disabled", oldValue);
   }
 
-  get disabled() { 
+  get disabled() {
     return this._disabled;
   }
 
   set focusable(value) {
     let oldValue = this._focusable;
-    if(value === oldValue) {
+    if (value === oldValue) {
       return;
     }
 
-    value ? this.setAttribute('tabindex', 0) : this.removeAttribute('tabindex');
+    value ? this.setAttribute("tabindex", 0) : this.removeAttribute("tabindex");
 
     this._focusable = value;
-    this.requestUpdate('focusable', oldValue)
+    this.requestUpdate("focusable", oldValue);
   }
 
   get focusable() {
     return this._focusable;
   }
 
-  constructor(){
+  constructor() {
     super();
 
     this.twoLine = false;
     this.dense = false;
     this.disabled = false;
-    this.selectionMode = 'default';
+    this.selectionMode = "default";
     this.selected = false;
     this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
@@ -367,84 +384,96 @@ export class DwListItem extends LitElement {
 
   updated(changedProps) {
     super.updated(changedProps);
-    if (changedProps.has('title1') || changedProps.has('title2')) {
+    if (changedProps.has("title1") || changedProps.has("title2")) {
       this._setTooltipText();
     }
   }
 
   render() {
     return html`
-
-      ${this.disabled ? '' : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
+      ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
 
       <!-- Leading icon -->
-      ${this.hasLeadingIcon ? this._leadingIconTemplate : ''}
+      ${this.hasLeadingIcon ? this._leadingIconTemplate : ""}
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
         <div id="title1" class="primary-text subtitle1 ellipses">${this.title1Template}</div>
-        ${this._tooltipTitle1 ? html`
-          <dw-tooltip 
-            .for=${"title1"}
-            .content=${this._tooltipTitle1} 
-            .extraOptions=${{delay: [500, 0]}}
-            .placement=${this.tooltipPlacement}>
-          </dw-tooltip>
-        ` : ''}
-        ${this.title2 && this.twoLine ? html`
-          <div id="title2" class="secondary-text body2 ellipses">${this.title2Template}</div>
-          ${this._tooltipTitle2 ? html`
-            <dw-tooltip 
-              .for=${"title2"}
-              .content=${this._tooltipTitle2} 
-              .extraOptions=${{delay: [500, 0]}}
-              .placement=${this.tooltipPlacement}>
-            </dw-tooltip>
-          ` : ''}
-        ` : ''}
+        ${this._tooltipTitle1
+          ? html`
+              <dw-tooltip
+                .for=${"title1"}
+                .content=${this._tooltipTitle1}
+                .extraOptions=${{ delay: [500, 0] }}
+                .placement=${this.tooltipPlacement}
+              >
+              </dw-tooltip>
+            `
+          : ""}
+        ${this.title2 && this.twoLine
+          ? html`
+              <div id="title2" class="secondary-text body2 ellipses">${this.title2Template}</div>
+              ${this._tooltipTitle2
+                ? html`
+                    <dw-tooltip
+                      .for=${"title2"}
+                      .content=${this._tooltipTitle2}
+                      .extraOptions=${{ delay: [500, 0] }}
+                      .placement=${this.tooltipPlacement}
+                    >
+                    </dw-tooltip>
+                  `
+                : ""}
+            `
+          : ""}
       </div>
 
       <!-- Trailing Icon -->
-      ${this.hasTrailingIcon ? this._trailingIconTemplate : ''}
+      ${this.hasTrailingIcon ? this._trailingIconTemplate : ""}
     `;
   }
 
   get title1Template() {
-    if(this.title1) {
-      return html`${this.title1}`
+    if (this.title1) {
+      return html`${unsafeHTML(this._getTitle(this.title1))}`;
     }
 
-    return html`<slot name="title1"></slot>`
+    return html`<slot name="title1"></slot>`;
   }
 
   get title2Template() {
-    if(this.title2) {
-      return html`${this.title2}`
+    if (this.title2) {
+      return html`${this.title2}`;
     }
 
-    return html`<slot name="title2"></slot>`
+    return html`<slot name="title2"></slot>`;
   }
 
-  connectedCallback() { 
+  connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('keydown', this._keydownHandler);
-    this.addEventListener('click', this._selectItem);
+    this.addEventListener("keydown", this._keydownHandler);
+    this.addEventListener("click", this._selectItem);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('keydown', this._keydownHandler);
-    this.removeEventListener('click', this._selectItem);
+    this.removeEventListener("keydown", this._keydownHandler);
+    this.removeEventListener("click", this._selectItem);
   }
 
   /**
    * Returns leading icon's template
    * Override this function to customize leading icon
    */
-  get _leadingIconTemplate(){
+  get _leadingIconTemplate() {
     return html`
       <div class="leading-icon-container">
-        <dw-icon class="leading-icon list-item__icon" ?disabled="${this.disabled}" .name="${this.leadingIcon}" .iconFont="${this.leadingIconFont}"></dw-icon>
+        <dw-icon
+          class="leading-icon list-item__icon"
+          ?disabled="${this.disabled}"
+          .name="${this.leadingIcon}"
+          .iconFont="${this.leadingIconFont}"
+        ></dw-icon>
       </div>
     `;
   }
@@ -453,9 +482,14 @@ export class DwListItem extends LitElement {
    * Returns trailing icon's template
    * Override this function to customize trailing icon
    */
-  get _trailingIconTemplate(){
+  get _trailingIconTemplate() {
     return html`
-      <dw-icon class="list-item__icon trailing-icon" ?disabled="${this.disabled}" .name="${this.trailingIcon}" .iconFont="${this.trailingIconFont}"></dw-icon>
+      <dw-icon
+        class="list-item__icon trailing-icon"
+        ?disabled="${this.disabled}"
+        .name="${this.trailingIcon}"
+        .iconFont="${this.trailingIconFont}"
+      ></dw-icon>
     `;
   }
 
@@ -467,50 +501,52 @@ export class DwListItem extends LitElement {
 
     //Down Arrows
     if (keyCode === 40) {
-      // To prevent browser's scroll up/down 
+      // To prevent browser's scroll up/down
       e.preventDefault();
       this._focusNextElement(e.target.nextElementSibling);
       return;
     }
 
-    //Up Arrow 
+    //Up Arrow
     if (keyCode === 38) {
-      // To prevent browser's scroll up/down 
+      // To prevent browser's scroll up/down
       e.preventDefault();
       this._focusPreviousElement(e.target.previousElementSibling);
       return;
     }
 
     //Enter
-    if (keyCode === 13) { 
+    if (keyCode === 13) {
       this._selectItem();
       this._dispatchClickEvent();
     }
   }
 
   /**
-   * 
+   *
    * Dispatch `click` event when selection mode is `none`.
    */
-  _dispatchClickEvent(){
-    if(this.selectionMode !== 'none'){
+  _dispatchClickEvent() {
+    if (this.selectionMode !== "none") {
       return;
     }
 
-    this.dispatchEvent(new CustomEvent('click', {
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent("click", {
+        composed: true,
+      })
+    );
   }
 
   /**
    * Focused next element. It skips disabled element
    */
-  _focusNextElement(el) { 
-    if (!el) { 
+  _focusNextElement(el) {
+    if (!el) {
       return;
     }
 
-    if (!el.disabled) { 
+    if (!el.disabled) {
       el.focus && el.focus();
       return;
     }
@@ -521,40 +557,40 @@ export class DwListItem extends LitElement {
   /**
    * Focused previous element. It skips disabled element
    */
-  _focusPreviousElement(el) { 
-    if (!el) { 
+  _focusPreviousElement(el) {
+    if (!el) {
       return;
     }
 
-    if (!el.disabled) { 
+    if (!el.disabled) {
       el.focus && el.focus();
       return;
     }
 
     this._focusPreviousElement(el.previousElementSibling);
   }
-  
+
   /**
    * Updates selection based on `selectionMode`. Skips if `disabled`.
    */
-  _selectItem() { 
-    if (this.disabled) { 
+  _selectItem() {
+    if (this.disabled) {
       return;
     }
 
-    if(this.selectionMode === 'none'){
+    if (this.selectionMode === "none") {
       return;
     }
 
-    this.selected = this.selectionMode === 'toggle' ? !this.selected : true;
+    this.selected = this.selectionMode === "toggle" ? !this.selected : true;
   }
 
   /**
    * @event Triggers `selection-changed` events
    */
-  _triggerSelectionChangedEvent() { 
-    let event = new CustomEvent('selection-changed');
-    
+  _triggerSelectionChangedEvent() {
+    let event = new CustomEvent("selection-changed");
+
     this.dispatchEvent(event);
   }
 
@@ -562,13 +598,25 @@ export class DwListItem extends LitElement {
    * @return {String} `title1` if ellipsis applied to title1 or `title2` if ellipsis applied to title2.
    * @protected
    */
-   _setTooltipText() {
-    const title1Tooltip = this.renderRoot.querySelector('.primary-text');
-    this._tooltipTitle1 = title1Tooltip && (title1Tooltip.offsetWidth < title1Tooltip.scrollWidth) ? this.title1 : '';
+  _setTooltipText() {
+    const title1Tooltip = this.renderRoot.querySelector(".primary-text");
+    this._tooltipTitle1 =
+      title1Tooltip && title1Tooltip.offsetWidth < title1Tooltip.scrollWidth ? this.title1 : "";
 
-    const title2Tooltip = this.renderRoot.querySelector('.secondary-text');
-    this._tooltipTitle2 = title2Tooltip && (title2Tooltip.offsetWidth < title2Tooltip.scrollWidth) ? this.title2 : '';
+    const title2Tooltip = this.renderRoot.querySelector(".secondary-text");
+    this._tooltipTitle2 =
+      title2Tooltip && title2Tooltip.offsetWidth < title2Tooltip.scrollWidth ? this.title2 : "";
+  }
+
+  /**
+   * Convert text into HTML Template with Highlight text using query string
+   * @param {String} text
+   * @returns {HTMLTemplateElement}
+   */
+  _getTitle(text) {
+    let regex = new RegExp(`(${this.highlight})`, "gi");
+    return text.replace(regex, `<span class="highlight">$1</span>`);
   }
 }
 
-window.customElements.define('dw-list-item', DwListItem);
+window.customElements.define("dw-list-item", DwListItem);
