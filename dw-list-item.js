@@ -8,24 +8,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, css } from "lit-element";
-import { LitElement } from "@dreamworld/pwa-helpers/lit-element.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import "@dreamworld/dw-icon";
-import "@dreamworld/dw-ripple";
-import "@dreamworld/dw-tooltip";
+import { LitElement, html, css } from '@dreamworld/pwa-helpers/lit.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import '@dreamworld/dw-icon';
+import '@dreamworld/dw-ripple';
+import '@dreamworld/dw-tooltip';
 
 //These are dw style needed by this element.
-import { Typography } from "@dreamworld/material-styles/typography";
-import {
-  displayFlex,
-  horizontal,
-  vertical,
-  flexFactor,
-} from "@dreamworld/flex-layout/flex-layout-literals";
-import { centerAligned } from "@dreamworld/flex-layout/flex-layout-alignment-literals";
+import { Typography } from '@dreamworld/material-styles/typography';
 
-export class DwListItem extends LitElement {
+export class DwListItem extends LitElement { 
   static get styles() {
     return [
       Typography,
@@ -33,9 +25,9 @@ export class DwListItem extends LitElement {
         :host {
           user-select: none;
           outline: none;
-          ${displayFlex};
-          ${horizontal};
-          ${centerAligned};
+          display: flex;  
+          flex-direction: row;
+          align-items: center;
           height: 48px;
           position: relative;
           padding: 0 16px;
@@ -57,9 +49,7 @@ export class DwListItem extends LitElement {
         }
 
         .item-text-container {
-          ${displayFlex};
-          ${vertical};
-          ${flexFactor};
+          
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 

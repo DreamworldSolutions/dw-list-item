@@ -8,9 +8,9 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html, css } from "lit-element";
-import "../dw-list-item";
-import "./dw-list";
+import { LitElement, html, css } from '@dreamworld/pwa-helpers/lit.js';
+import '../dw-list-item';
+import './dw-list';
 
 export class DwListItemDemo extends LitElement {
   static get styles() {
