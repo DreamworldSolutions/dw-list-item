@@ -607,6 +607,10 @@ export class DwListItem extends LitElement {
    * @returns {HTMLTemplateElement}
    */
   _getTitle(text) {
+    if (!this.highlight) {
+      return text;
+    }
+
     let regex = new RegExp(`(${this.highlight})`, "gi");
     return text.replace(regex, `<span class="highlight">$1</span>`);
   }
