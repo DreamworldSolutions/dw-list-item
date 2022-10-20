@@ -8,16 +8,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html, css } from '@dreamworld/pwa-helpers/lit.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import '@dreamworld/dw-icon';
-import '@dreamworld/dw-ripple';
-import '@dreamworld/dw-tooltip';
+import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import "@dreamworld/dw-icon";
+import "@dreamworld/dw-ripple";
+import "@dreamworld/dw-tooltip";
 
 //These are dw style needed by this element.
-import { Typography } from '@dreamworld/material-styles/typography';
+import { Typography } from "@dreamworld/material-styles/typography";
 
-export class DwListItem extends LitElement { 
+export class DwListItem extends LitElement {
   static get styles() {
     return [
       Typography,
@@ -25,7 +25,7 @@ export class DwListItem extends LitElement {
         :host {
           user-select: none;
           outline: none;
-          display: flex;  
+          display: flex;
           flex-direction: row;
           align-items: center;
           height: 48px;
@@ -49,7 +49,6 @@ export class DwListItem extends LitElement {
         }
 
         .item-text-container {
-          
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 
@@ -604,6 +603,10 @@ export class DwListItem extends LitElement {
    * @returns {HTMLTemplateElement}
    */
   _getTitle(text) {
+    if (!this.highlight) {
+      return text;
+    }
+
     let regex = new RegExp(`(${this.highlight})`, "gi");
     return text.replace(regex, `<span class="highlight">$1</span>`);
   }
