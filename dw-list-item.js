@@ -49,7 +49,10 @@ export class DwListItem extends LitElement {
         }
 
         .item-text-container {
-          
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          flex-basis: 0.000000001px;
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
         }
 

@@ -79,7 +79,7 @@ export class DwListItemDemo extends LitElement {
         <dw-list header="Basic">
           ${this._basicItemList.map(
             (item, index) => html`
-              <dw-list-item title1="${item}" .focusable=${false}></dw-list-item>
+              <dw-list-item title1="${item}" .focusable=${false} trailingIcon="edit" hasTrailingIcon></dw-list-item>
             `
           )}
           <dw-list-item disabled title1="test"></dw-list-item>
