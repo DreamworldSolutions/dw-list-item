@@ -495,7 +495,7 @@ export class DwListItem extends LitElement {
         ?disabled="${this.disabled}"
         .name="${this.trailingIcon}"
         .iconFont="${this.trailingIconFont}"
-        .symbol="${this.trailingIconFont}"
+        .symbol="${this.trailingIconSymbol}"
       ></dw-icon>
     `;
   }
