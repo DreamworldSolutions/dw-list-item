@@ -313,6 +313,18 @@ export class DwListItem extends LitElement {
        * Highlight words
        */
       highlight: { type: String },
+      
+      /**
+       * Input property.
+       * set to true when item has leading Symbol.
+       */
+      leadingIconSymbol:{ type: Boolean },
+      
+      /**
+       * Input property.
+       * set to true when item has trailing Symbol
+       */
+      trailingIconSymbol:{ type: Boolean },
     };
   }
 
@@ -466,6 +478,7 @@ export class DwListItem extends LitElement {
           ?disabled="${this.disabled}"
           .name="${this.leadingIcon}"
           .iconFont="${this.leadingIconFont}"
+          .symbol="${this.leadingIconSymbol}"
         ></dw-icon>
       </div>
     `;
@@ -482,6 +495,7 @@ export class DwListItem extends LitElement {
         ?disabled="${this.disabled}"
         .name="${this.trailingIcon}"
         .iconFont="${this.trailingIconFont}"
+        .symbol="${this.trailingIconSymbol}"
       ></dw-icon>
     `;
   }
