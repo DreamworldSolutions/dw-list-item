@@ -956,10 +956,10 @@
     "@material/mwc-icon" "^0.26.1"
     lit-element "^2.2.0"
 
-"@dreamworld/dw-ripple@^2.6.0-hisab-ripple.1":
-  version "2.6.0-hisab-ripple.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.6.0-hisab-ripple.1.tgz#c55bb0d65fe2b0ed35ed702ac087ebf771db6d59"
-  integrity sha512-B9UosbRelDRYCkwIRP7kgeatgCS7iby/36YbaPtjeMJMJ2oR0x/Q0sn7gwXkPzhPC3lgLn3mX43UdyUihhkdhg==
+"@dreamworld/dw-ripple@^2.6.0-ripple-rendring-not-cencel-on-pointer-move.1":
+  version "2.6.0-ripple-rendring-not-cencel-on-pointer-move.1"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-2.6.0-ripple-rendring-not-cencel-on-pointer-move.1.tgz#98be1aa294d4aef858fc05e77f256717e5197930"
+  integrity sha512-/guO7XWVW+BAdTnCVFFgTzBDwFyJVR/QB3m5zGB7f3ulrlfRk0ZogZKw5R5j7Or5fBKd57k0NiKO+1W65boTNQ==
   dependencies:
     "@material/mwc-ripple" "^0.26.1"
     lit-element "^2.2.0"
