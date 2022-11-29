@@ -31,10 +31,10 @@
     "@dreamworld/pwa-helpers" "^1.13.1"
     "@material/mwc-icon" "0.27.0"
 
-"@dreamworld/dw-ripple@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-3.0.0.tgz#2e5b708d4f3292e9a0ccd2292f21a7dd39790251"
-  integrity sha512-U+0dOHcS4QkmGt7m1Qjkv5wycJF61hzJQowCR/63Yxd2a3plFbrodFnW+U7E96iRRvNbvHkkZieWW3qrsfHDsA==
+"@dreamworld/dw-ripple@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@dreamworld/dw-ripple/-/dw-ripple-3.1.0.tgz#ffba0945706b958e163e721401ac3b37ebdcb305"
+  integrity sha512-3zlCE/qKWa7OH5P6anTtRn9A7jxH27pjMIFDxkBkUciYzBzo+M/jyZQShLgzd516Xd6l9h81oanB3+QZVKZ38A==
   dependencies:
     "@material/mwc-ripple" "0.27.0"
 
