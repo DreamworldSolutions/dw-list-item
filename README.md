@@ -90,3 +90,4 @@ import "@dreamworld/dw-list-item/dw-list-item";
 | `--dw-select-highlight-text-color`  | `inherit`             | Highlight span text color                                                                 |
 | `--dw-select-highlight-bg-color`    | `inherit`             | Highlight span backgroound color                                                          |
 | `--dw-select-highlight-font-weight` | `inherit`             | Highlight span text font weight                                                           |
+ 
