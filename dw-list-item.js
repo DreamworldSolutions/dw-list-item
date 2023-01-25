@@ -8,16 +8,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html, css } from '@dreamworld/pwa-helpers/lit.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import '@dreamworld/dw-icon';
-import '@dreamworld/dw-ripple';
-import '@dreamworld/dw-ellipsis';
+import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import "@dreamworld/dw-icon";
+import "@dreamworld/dw-ripple";
+import "@dreamworld/dw-ellipsis";
 
 //These are dw style needed by this element.
-import { Typography } from '@dreamworld/material-styles/typography';
+import { Typography } from "@dreamworld/material-styles/typography";
 
-export class DwListItem extends LitElement { 
+export class DwListItem extends LitElement {
   static get styles() {
     return [
       Typography,
@@ -25,7 +25,7 @@ export class DwListItem extends LitElement {
         :host {
           user-select: none;
           outline: none;
-          display: flex;  
+          display: flex;
           flex-direction: row;
           align-items: center;
           height: 48px;
@@ -303,18 +303,18 @@ export class DwListItem extends LitElement {
        * Highlight words
        */
       highlight: { type: String },
-      
+
       /**
        * Input property.
        * set to true when item has leading Symbol.
        */
-      leadingIconSymbol:{ type: Boolean },
-      
+      leadingIconSymbol: { type: Boolean },
+
       /**
        * Input property.
        * set to true when item has trailing Symbol
        */
-      trailingIconSymbol:{ type: Boolean },
+      trailingIconSymbol: { type: Boolean },
     };
   }
 
@@ -386,10 +386,20 @@ export class DwListItem extends LitElement {
 
       <!-- Item text -->
       <div class="item-text-container ellipses">
-        <dw-ellipsis id="title1" class="primary-text subtitle1 ellipses">${this.title1Template}</dw-ellipsis>
+        <dw-ellipsis
+          id="title1"
+          class="primary-text subtitle1 ellipses"
+          .placement=${this.tooltipPlacement}
+          >${this.title1Template}</dw-ellipsis
+        >
         ${this.title2 && this.twoLine
           ? html`
-              <dw-ellipsis id="title2" class="secondary-text body2 ellipses">${this.title2Template}</dw-ellipsis>
+              <dw-ellipsis
+                id="title2"
+                class="secondary-text body2 ellipses"
+                .placement=${this.tooltipPlacement}
+                >${this.title2Template}</dw-ellipsis
+              >
             `
           : ""}
       </div>
@@ -493,38 +503,52 @@ export class DwListItem extends LitElement {
   }
 
   _getNextFocusableElement(el) {
-    if(el.nextElementSibling && (el.nextElementSibling.hasAttribute('opened') || el.nextElementSibling.hasAttribute('hasChild'))) {
+    if (
+      el.nextElementSibling &&
+      (el.nextElementSibling.hasAttribute("opened") ||
+        el.nextElementSibling.hasAttribute("hasChild"))
+    ) {
       return el.nextElementSibling.children[0];
     }
 
-    if(el.nextElementSibling) {
-      return el.nextElementSibling 
+    if (el.nextElementSibling) {
+      return el.nextElementSibling;
     }
 
-    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+    if (
+      el.parentElement &&
+      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
+    ) {
       return el.parentElement.nextElementSibling;
     }
-    
+
     return el;
   }
 
   _getPreviousFocusableElement(el) {
-    if(el.previousElementSibling && (el.previousElementSibling.hasAttribute('opened') || el.previousElementSibling.hasAttribute('hasChild'))) {
-      let lastChildren = el.previousElementSibling.children.length -1;
+    if (
+      el.previousElementSibling &&
+      (el.previousElementSibling.hasAttribute("opened") ||
+        el.previousElementSibling.hasAttribute("hasChild"))
+    ) {
+      let lastChildren = el.previousElementSibling.children.length - 1;
       return el.previousElementSibling.children[lastChildren];
     }
 
-    if(el.previousElementSibling) {
-      return el.previousElementSibling 
+    if (el.previousElementSibling) {
+      return el.previousElementSibling;
     }
 
-    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+    if (
+      el.parentElement &&
+      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
+    ) {
       return el.parentElement.previousElementSibling;
     }
-    
+
     return el;
   }
-  
+
   /**
    *
    * Dispatch `click` event when selection mode is `none`.
@@ -549,7 +573,7 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (el.hasAttribute("disabled") || el.disabled) { 
+    if (el.hasAttribute("disabled") || el.disabled) {
       let nextFocusableElement = this._getNextFocusableElement(el);
       this._focusNextElement(nextFocusableElement);
       return;
@@ -566,7 +590,7 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (el.hasAttribute("disabled") || el.disabled) { 
+    if (el.hasAttribute("disabled") || el.disabled) {
       let previousFocusableElement = this._getPreviousFocusableElement(el);
       this._focusPreviousElement(previousFocusableElement);
       return;
