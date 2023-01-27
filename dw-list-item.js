@@ -42,18 +42,13 @@ export class DwListItem extends LitElement {
           display: none;
         }
 
-        .ellipses {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-
         .item-text-container {
           display: flex;
           flex-direction: column;
           flex: 1;
           flex-basis: 0.000000001px;
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
+          overflow: hidden;
         }
 
         :host([selected]) {
@@ -385,10 +380,10 @@ export class DwListItem extends LitElement {
       ${this.hasLeadingIcon ? this._leadingIconTemplate : ""}
 
       <!-- Item text -->
-      <div class="item-text-container ellipses">
+      <div class="item-text-container">
         <dw-ellipsis
           id="title1"
-          class="primary-text subtitle1 ellipses"
+          class="primary-text subtitle1"
           .placement=${this.tooltipPlacement}
           >${this.title1Template}</dw-ellipsis
         >
@@ -396,7 +391,7 @@ export class DwListItem extends LitElement {
           ? html`
               <dw-ellipsis
                 id="title2"
-                class="secondary-text body2 ellipses"
+                class="secondary-text body2"
                 .placement=${this.tooltipPlacement}
                 >${this.title2Template}</dw-ellipsis
               >
