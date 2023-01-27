@@ -8,16 +8,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html, css } from '@dreamworld/pwa-helpers/lit.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import '@dreamworld/dw-icon';
-import '@dreamworld/dw-ripple';
-import '@dreamworld/dw-tooltip';
+import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import "@dreamworld/dw-icon";
+import "@dreamworld/dw-ripple";
+import "@dreamworld/dw-ellipsis";
 
 //These are dw style needed by this element.
-import { Typography } from '@dreamworld/material-styles/typography';
+import { Typography } from "@dreamworld/material-styles/typography";
 
-export class DwListItem extends LitElement { 
+export class DwListItem extends LitElement {
   static get styles() {
     return [
       Typography,
@@ -25,7 +25,7 @@ export class DwListItem extends LitElement {
         :host {
           user-select: none;
           outline: none;
-          display: flex;  
+          display: flex;
           flex-direction: row;
           align-items: center;
           height: 48px;
@@ -42,18 +42,13 @@ export class DwListItem extends LitElement {
           display: none;
         }
 
-        .ellipses {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-
         .item-text-container {
           display: flex;
           flex-direction: column;
           flex: 1;
           flex-basis: 0.000000001px;
           color: var(--mdc-theme-text-primary, rgba(0, 0, 0, 0.87));
+          overflow: hidden;
         }
 
         :host([selected]) {
@@ -275,16 +270,6 @@ export class DwListItem extends LitElement {
       hasTrailingIcon: { type: Boolean },
 
       /**
-       * When ellipsis is active for title1, show content into tooltip.
-       */
-      _tooltipTitle1: { type: String },
-
-      /**
-       * When ellipsis is active for title2, show content into tooltip.
-       */
-      _tooltipTitle2: { type: String },
-
-      /**
        * Input property.
        * use to set placement of tooltip.
        */
@@ -313,18 +298,18 @@ export class DwListItem extends LitElement {
        * Highlight words
        */
       highlight: { type: String },
-      
+
       /**
        * Input property.
        * set to true when item has leading Symbol.
        */
-      leadingIconSymbol:{ type: Boolean },
-      
+      leadingIconSymbol: { type: Boolean },
+
       /**
        * Input property.
        * set to true when item has trailing Symbol
        */
-      trailingIconSymbol:{ type: Boolean },
+      trailingIconSymbol: { type: Boolean },
     };
   }
 
@@ -387,13 +372,6 @@ export class DwListItem extends LitElement {
     this.focusable = true;
   }
 
-  updated(changedProps) {
-    super.updated(changedProps);
-    if (changedProps.has("title1") || changedProps.has("title2")) {
-      this._setTooltipText();
-    }
-  }
-
   render() {
     return html`
       ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
@@ -402,33 +380,21 @@ export class DwListItem extends LitElement {
       ${this.hasLeadingIcon ? this._leadingIconTemplate : ""}
 
       <!-- Item text -->
-      <div class="item-text-container ellipses">
-        <div id="title1" class="primary-text subtitle1 ellipses">${this.title1Template}</div>
-        ${this._tooltipTitle1
-          ? html`
-              <dw-tooltip
-                .for=${"title1"}
-                .content=${this._tooltipTitle1}
-                .extraOptions=${{ delay: [500, 0] }}
-                .placement=${this.tooltipPlacement}
-              >
-              </dw-tooltip>
-            `
-          : ""}
+      <div class="item-text-container">
+        <dw-ellipsis
+          id="title1"
+          class="primary-text subtitle1"
+          .placement=${this.tooltipPlacement}
+          >${this.title1Template}</dw-ellipsis
+        >
         ${this.title2 && this.twoLine
           ? html`
-              <div id="title2" class="secondary-text body2 ellipses">${this.title2Template}</div>
-              ${this._tooltipTitle2
-                ? html`
-                    <dw-tooltip
-                      .for=${"title2"}
-                      .content=${this._tooltipTitle2}
-                      .extraOptions=${{ delay: [500, 0] }}
-                      .placement=${this.tooltipPlacement}
-                    >
-                    </dw-tooltip>
-                  `
-                : ""}
+              <dw-ellipsis
+                id="title2"
+                class="secondary-text body2"
+                .placement=${this.tooltipPlacement}
+                >${this.title2Template}</dw-ellipsis
+              >
             `
           : ""}
       </div>
@@ -532,38 +498,52 @@ export class DwListItem extends LitElement {
   }
 
   _getNextFocusableElement(el) {
-    if(el.nextElementSibling && (el.nextElementSibling.hasAttribute('opened') || el.nextElementSibling.hasAttribute('hasChild'))) {
+    if (
+      el.nextElementSibling &&
+      (el.nextElementSibling.hasAttribute("opened") ||
+        el.nextElementSibling.hasAttribute("hasChild"))
+    ) {
       return el.nextElementSibling.children[0];
     }
 
-    if(el.nextElementSibling) {
-      return el.nextElementSibling 
+    if (el.nextElementSibling) {
+      return el.nextElementSibling;
     }
 
-    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+    if (
+      el.parentElement &&
+      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
+    ) {
       return el.parentElement.nextElementSibling;
     }
-    
+
     return el;
   }
 
   _getPreviousFocusableElement(el) {
-    if(el.previousElementSibling && (el.previousElementSibling.hasAttribute('opened') || el.previousElementSibling.hasAttribute('hasChild'))) {
-      let lastChildren = el.previousElementSibling.children.length -1;
+    if (
+      el.previousElementSibling &&
+      (el.previousElementSibling.hasAttribute("opened") ||
+        el.previousElementSibling.hasAttribute("hasChild"))
+    ) {
+      let lastChildren = el.previousElementSibling.children.length - 1;
       return el.previousElementSibling.children[lastChildren];
     }
 
-    if(el.previousElementSibling) {
-      return el.previousElementSibling 
+    if (el.previousElementSibling) {
+      return el.previousElementSibling;
     }
 
-    if(el.parentElement && (el.parentElement.hasAttribute('opened') || el.parentElement.hasAttribute('hasChild'))) {
+    if (
+      el.parentElement &&
+      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
+    ) {
       return el.parentElement.previousElementSibling;
     }
-    
+
     return el;
   }
-  
+
   /**
    *
    * Dispatch `click` event when selection mode is `none`.
@@ -588,7 +568,7 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (el.hasAttribute("disabled") || el.disabled) { 
+    if (el.hasAttribute("disabled") || el.disabled) {
       let nextFocusableElement = this._getNextFocusableElement(el);
       this._focusNextElement(nextFocusableElement);
       return;
@@ -605,7 +585,7 @@ export class DwListItem extends LitElement {
       return;
     }
 
-    if (el.hasAttribute("disabled") || el.disabled) { 
+    if (el.hasAttribute("disabled") || el.disabled) {
       let previousFocusableElement = this._getPreviousFocusableElement(el);
       this._focusPreviousElement(previousFocusableElement);
       return;
@@ -636,20 +616,6 @@ export class DwListItem extends LitElement {
     let event = new CustomEvent("selection-changed");
 
     this.dispatchEvent(event);
-  }
-
-  /**
-   * @return {String} `title1` if ellipsis applied to title1 or `title2` if ellipsis applied to title2.
-   * @protected
-   */
-  _setTooltipText() {
-    const title1Tooltip = this.renderRoot.querySelector(".primary-text");
-    this._tooltipTitle1 =
-      title1Tooltip && title1Tooltip.offsetWidth < title1Tooltip.scrollWidth ? this.title1 : "";
-
-    const title2Tooltip = this.renderRoot.querySelector(".secondary-text");
-    this._tooltipTitle2 =
-      title2Tooltip && title2Tooltip.offsetWidth < title2Tooltip.scrollWidth ? this.title2 : "";
   }
 
   /**
