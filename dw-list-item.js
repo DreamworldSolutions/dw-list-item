@@ -633,4 +633,4 @@ export class DwListItem extends LitElement {
   }
 }
 
-window.customElements.define("dw-list-item", DwListItem);
+customElements.define("dw-list-item", DwListItem);
