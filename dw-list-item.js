@@ -373,6 +373,8 @@ export class DwListItem extends LitElement {
   }
 
   render() {
+    const title2hasContent = this.querySelector('[slot="title2"]') !== null;
+    
     return html`
       ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
 
@@ -387,7 +389,7 @@ export class DwListItem extends LitElement {
           .placement=${this.tooltipPlacement}
           >${this.title1Template}</dw-ellipsis
         >
-        ${this.title2 && this.twoLine
+        ${(this.title2 || title2hasContent) && this.twoLine
           ? html`
               <dw-ellipsis
                 id="title2"
