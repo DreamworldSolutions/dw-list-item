@@ -23,6 +23,7 @@ export class DwListItem extends LitElement {
       Typography,
       css`
         :host {
+          box-sizing: border-box;
           user-select: none;
           outline: none;
           display: flex;
