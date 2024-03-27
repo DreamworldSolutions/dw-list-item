@@ -1,18 +1,11 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
 import { LitElement, html, css } from "@dreamworld/pwa-helpers/lit.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "@dreamworld/dw-icon";
 import "@dreamworld/dw-ripple";
 import "@dreamworld/dw-ellipsis";
+import textToHtml from '@dreamworld/web-util/textToHtml';
+import htmlTrim from '@dreamworld/web-util/htmlTrim';
+import Mark from 'mark.js/src/vanilla.js';
 
 //These are dw style needed by this element.
 import { Typography } from "@dreamworld/material-styles/typography";
@@ -626,12 +619,20 @@ export class DwListItem extends LitElement {
    * @returns {HTMLTemplateElement}
    */
   _getTitle(text) {
-    if (!this.highlight) {
+    if (!this.highlight || !text) {
       return text;
     }
 
-    let regex = new RegExp(`(${this.highlight})`, "gi");
-    return text.replace(regex, `<span class="highlight">$1</span>`);
+    const keywords = [...this.highlight.split(' '), this.highlight];
+    
+    const newHtml = textToHtml(text);
+    const instance = new Mark(newHtml);
+    instance.mark(keywords, {
+      "element": "span",
+      "className": "highlight",
+      "acrossElements": true
+    });
+    return htmlTrim(newHtml);
   }
 }
 
