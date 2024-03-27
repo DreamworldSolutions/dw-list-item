@@ -363,6 +363,7 @@ export class DwListItem extends LitElement {
     this._selectItem = this._selectItem.bind(this);
     this.leadingIconFont = "FILLED";
     this.trailingIconFont = "FILLED";
+    this.tooltipPlacement = 'bottom';
   }
 
   render() {
