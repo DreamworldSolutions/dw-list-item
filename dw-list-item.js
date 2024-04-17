@@ -82,14 +82,10 @@ export class DwListItem extends LitElement {
           z-index: 1;
         }
 
-        :host(:not([disabled]):hover)::before {
-          opacity: 0.04;
-        }
-
         :host(:focus)::before,
         :host(:focus:hover)::before,
         :host([activated])::before {
-          opacity: 0.12;
+          opacity: 0.04;
         }
 
         :host(:focus[selected]:not([disabled]))::before,
