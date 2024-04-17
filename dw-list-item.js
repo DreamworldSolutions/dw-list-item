@@ -82,27 +82,21 @@ export class DwListItem extends LitElement {
           z-index: 1;
         }
 
-        :host(:not([disabled]):hover)::before {
-          opacity: 0.04;
+        :host([selected]),
+        :host([activated]) {
+          --mdc-theme-on-surface: var(--mdc-theme-primary);
         }
 
         :host(:focus)::before,
-        :host(:focus:hover)::before,
-        :host([activated])::before {
-          opacity: 0.12;
-        }
-
-        :host(:focus[selected]:not([disabled]))::before,
-        :host(:focus[selected]:not([disabled]):hover)::before {
-          opacity: 0.24;
-        }
-
-        :host(:not([disabled])[selected])::before {
+        :host([activated])::before,
+        :host(:not([disabled])[selected])::before  {
           opacity: 0.08;
-          background-color: var(--mdc-theme-primary, #6200ee);
+          background-color: var(--mdc-theme-primary);
         }
 
-        :host(:not([disabled])[selected]:hover)::before {
+        :host(:focus:hover)::before,
+        :host([activated]:hover)::before,
+        :host(:not([disabled])[selected]:hover)::before  {
           opacity: 0.12;
         }
 
