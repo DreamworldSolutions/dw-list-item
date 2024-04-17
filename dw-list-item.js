@@ -82,31 +82,21 @@ export class DwListItem extends LitElement {
           z-index: 1;
         }
 
+        :host([selected]),
+        :host([activated]) {
+          --mdc-theme-on-surface: var(--mdc-theme-primary);
+        }
+
         :host(:focus)::before,
-        :host(:focus:hover)::before {
-          opacity: 0.04;
-        }
-
-        :host([activated]:hover)::before {
-          opacity: 0.12;
-        }
-
-        :host([activated])::before {
+        :host([activated])::before,
+        :host(:not([disabled])[selected])::before  {
           opacity: 0.08;
           background-color: var(--mdc-theme-primary);
         }
 
-        :host(:focus[selected]:not([disabled]))::before,
-        :host(:focus[selected]:not([disabled]):hover)::before {
-          opacity: 0.24;
-        }
-
-        :host(:not([disabled])[selected])::before {
-          opacity: 0.08;
-          background-color: var(--mdc-theme-primary, #6200ee);
-        }
-
-        :host(:not([disabled])[selected]:hover)::before {
+        :host(:focus:hover)::before,
+        :host([activated]:hover)::before,
+        :host(:not([disabled])[selected]:hover)::before  {
           opacity: 0.12;
         }
 
@@ -372,7 +362,7 @@ export class DwListItem extends LitElement {
 
   render() {
     const title2hasContent = this.querySelector('[slot="title2"]') !== null;
-
+    
     return html`
       ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
 
@@ -629,7 +619,7 @@ export class DwListItem extends LitElement {
     }
 
     const keywords = [...this.highlight.split(' '), this.highlight];
-
+    
     const newHtml = textToHtml(text);
     const instance = new Mark(newHtml);
     instance.mark(keywords, {
