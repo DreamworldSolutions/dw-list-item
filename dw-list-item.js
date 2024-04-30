@@ -353,7 +353,6 @@ export class DwListItem extends LitElement {
     this.disabled = false;
     this.selectionMode = "default";
     this.selected = false;
-    this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
     this.leadingIconFont = "FILLED";
     this.trailingIconFont = "FILLED";
@@ -412,13 +411,11 @@ export class DwListItem extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener("keydown", this._keydownHandler);
     this.addEventListener("click", this._selectItem);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener("keydown", this._keydownHandler);
     this.removeEventListener("click", this._selectItem);
   }
 
@@ -454,134 +451,6 @@ export class DwListItem extends LitElement {
         .symbol="${this.trailingIconSymbol}"
       ></dw-icon>
     `;
-  }
-
-  /**
-   * Handles keyboard events like `down`, `up`, `enter`
-   */
-  _keydownHandler(e) {
-    let keyCode = e.keyCode || e.which;
-
-    //Down Arrows
-    if (keyCode === 40) {
-      // To prevent browser's scroll up/down
-      e.preventDefault();
-      let nextFocusableElement = this._getNextFocusableElement(e.target);
-      this._focusNextElement(nextFocusableElement);
-      return;
-    }
-
-    //Up Arrow
-    if (keyCode === 38) {
-      // To prevent browser's scroll up/down
-      e.preventDefault();
-      let previousFocusableElement = this._getPreviousFocusableElement(e.target);
-      this._focusPreviousElement(previousFocusableElement);
-      return;
-    }
-
-    //Enter
-    if (keyCode === 13) {
-      this._selectItem();
-      this._dispatchClickEvent();
-    }
-  }
-
-  _getNextFocusableElement(el) {
-    if (
-      el.nextElementSibling &&
-      (el.nextElementSibling.hasAttribute("opened") ||
-        el.nextElementSibling.hasAttribute("hasChild"))
-    ) {
-      return el.nextElementSibling.children[0];
-    }
-
-    if (el.nextElementSibling) {
-      return el.nextElementSibling;
-    }
-
-    if (
-      el.parentElement &&
-      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
-    ) {
-      return el.parentElement.nextElementSibling;
-    }
-
-    return el;
-  }
-
-  _getPreviousFocusableElement(el) {
-    if (
-      el.previousElementSibling &&
-      (el.previousElementSibling.hasAttribute("opened") ||
-        el.previousElementSibling.hasAttribute("hasChild"))
-    ) {
-      let lastChildren = el.previousElementSibling.children.length - 1;
-      return el.previousElementSibling.children[lastChildren];
-    }
-
-    if (el.previousElementSibling) {
-      return el.previousElementSibling;
-    }
-
-    if (
-      el.parentElement &&
-      (el.parentElement.hasAttribute("opened") || el.parentElement.hasAttribute("hasChild"))
-    ) {
-      return el.parentElement.previousElementSibling;
-    }
-
-    return el;
-  }
-
-  /**
-   *
-   * Dispatch `click` event when selection mode is `none`.
-   */
-  _dispatchClickEvent() {
-    if (this.selectionMode !== "none") {
-      return;
-    }
-
-    this.dispatchEvent(
-      new CustomEvent("click", {
-        composed: true,
-      })
-    );
-  }
-
-  /**
-   * Focused next element. It skips disabled element
-   */
-  _focusNextElement(el) {
-    if (!el) {
-      return;
-    }
-
-    if (el.hasAttribute("disabled") || el.disabled) {
-      let nextFocusableElement = this._getNextFocusableElement(el);
-      this._focusNextElement(nextFocusableElement);
-      return;
-    }
-
-    el.focus && el.focus();
-  }
-
-  /**
-   * Focused previous element. It skips disabled element
-   */
-  _focusPreviousElement(el) {
-    if (!el) {
-      return;
-    }
-
-    if (el.hasAttribute("disabled") || el.disabled) {
-      let previousFocusableElement = this._getPreviousFocusableElement(el);
-      this._focusPreviousElement(previousFocusableElement);
-      return;
-    }
-
-    el.focus && el.focus();
   }
 
   /**

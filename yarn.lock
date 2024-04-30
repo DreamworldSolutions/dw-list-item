@@ -70,6 +70,13 @@
   dependencies:
     "@dreamworld/pwa-helpers" "^1.13.1"
 
+"@dreamworld/material-styles@^3.2.4":
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@dreamworld/material-styles/-/material-styles-3.2.4.tgz#8513d0e65566d8d7c4ee0fd08d1d08ff47879966"
+  integrity sha512-RQgwjiQDBFfYxNRkyuwunev3Ijk+FIOYIkqPJk0mvnnPPPOCQcUZKXsa4lS2N0Ez1daYWcT0KLvzIilqiWtBIg==
+  dependencies:
+    "@dreamworld/pwa-helpers" "^1.13.1"
+
 "@dreamworld/pwa-helpers@^1.13.1":
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/@dreamworld/pwa-helpers/-/pwa-helpers-1.13.1.tgz#825e6faf1c530591a48b6568996cdbebf8fcacc8"
@@ -92,10 +99,10 @@
     lit-element "^4.0.2"
     lodash-es "^4.17.21"
 
-"@dreamworld/web-util@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@dreamworld/web-util/-/web-util-1.7.1.tgz#aab5d9d658ff5419c7084878d5ae88b52289d8ef"
-  integrity sha512-r2AGGtDclUoi6ARBrpqf//2TEUI5tkTKMJ/yyUcgsDb/U9POe2IgTDE5waDgjsfMjj3SZsUGBMP5+sNaWR+VdA==
+"@dreamworld/web-util@^1.7.2":
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/@dreamworld/web-util/-/web-util-1.7.2.tgz#376b13469518d6385ba1a8a95e1e196f4629937d"
+  integrity sha512-AZq6tyFOEObKPYqjHf4d+EOt1bw6KDWk8V0ZNoJU9smeivCUouBfCoq3Q1OxOzO9VUvSlEhdG5GBr0fKTsZZRQ==
   dependencies:
     bowser "^2.11.0"
     lodash-es "^4.17.21"
