@@ -353,7 +353,6 @@ export class DwListItem extends LitElement {
     this.disabled = false;
     this.selectionMode = "default";
     this.selected = false;
-    this._keydownHandler = this._keydownHandler.bind(this);
     this._selectItem = this._selectItem.bind(this);
     this.leadingIconFont = "FILLED";
     this.trailingIconFont = "FILLED";
@@ -412,13 +411,11 @@ export class DwListItem extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener("keydown", this._keydownHandler);
     this.addEventListener("click", this._selectItem);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener("keydown", this._keydownHandler);
     this.removeEventListener("click", this._selectItem);
   }
 
@@ -454,37 +451,6 @@ export class DwListItem extends LitElement {
         .symbol="${this.trailingIconSymbol}"
       ></dw-icon>
     `;
-  }
-
-  /**
-   * Handles keyboard events like `down`, `up`, `enter`
-   */
-  _keydownHandler(e) {
-    let keyCode = e.keyCode || e.which;
-
-    //Down Arrows
-    if (keyCode === 40) {
-      // To prevent browser's scroll up/down
-      e.preventDefault();
-      let nextFocusableElement = this._getNextFocusableElement(e.target);
-      this._focusNextElement(nextFocusableElement);
-      return;
-    }
-
-    //Up Arrow
-    if (keyCode === 38) {
-      // To prevent browser's scroll up/down
-      e.preventDefault();
-      let previousFocusableElement = this._getPreviousFocusableElement(e.target);
-      this._focusPreviousElement(previousFocusableElement);
-      return;
-    }
-
-    //Enter
-    if (keyCode === 13) {
-      this._selectItem();
-      this._dispatchClickEvent();
-    }
   }
 
   _getNextFocusableElement(el) {
