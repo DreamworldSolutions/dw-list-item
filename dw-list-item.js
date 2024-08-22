@@ -403,7 +403,7 @@ export class DwListItem extends LitElement {
 
   get title2Template() {
     if (this.title2) {
-      return html`${this.title2}`;
+      return html`${unsafeHTML(this._getTitle(this.title2))}`;
     }
 
     return html`<slot name="title2"></slot>`;
