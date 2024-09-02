@@ -156,7 +156,7 @@ export class DwListItem extends LitElement {
         }
 
         /**
-         * When selectioMode is none we have no need to set foucus color. So override this style.
+         * When selectionMode is none we have no need to set focus color. So override this style.
          */
         :host(:focus:hover)::before {
           opacity: 0;
@@ -395,7 +395,7 @@ export class DwListItem extends LitElement {
 
   get title1Template() {
     if (this.title1) {
-      return html`${unsafeHTML(this._getTitle(this.title1))}`;
+      return html`${!this.highlight ? this.title1 : unsafeHTML(this._getTitle(this.title1))}`;
     }
 
     return html`<slot name="title1"></slot>`;
@@ -403,7 +403,7 @@ export class DwListItem extends LitElement {
 
   get title2Template() {
     if (this.title2) {
-      return html`${unsafeHTML(this._getTitle(this.title2))}`;
+      return html`${!this.highlight ? this.title2 : unsafeHTML(this._getTitle(this.title2))}`;
     }
 
     return html`<slot name="title2"></slot>`;
