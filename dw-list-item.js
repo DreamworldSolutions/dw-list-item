@@ -90,14 +90,14 @@ export class DwListItem extends LitElement {
         :host(:focus)::before,
         :host([activated])::before,
         :host(:not([disabled])[selected])::before  {
-          opacity: 0.08;
+          opacity: 0.12;
           background-color: var(--mdc-theme-primary);
         }
 
         :host(:focus:hover)::before,
         :host([activated]:hover)::before,
         :host(:not([disabled])[selected]:hover)::before  {
-          opacity: 0.12;
+          opacity: 0.16;
         }
 
         :host([disabled]) {
@@ -363,7 +363,7 @@ export class DwListItem extends LitElement {
     const title2hasContent = this.querySelector('[slot="title2"]') !== null;
     
     return html`
-      ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple}></dw-ripple>`}
+      ${this.disabled ? "" : html`<dw-ripple .primary=${this.showSelectedRipple && this.selected}></dw-ripple>`}
 
       <!-- Leading icon -->
       ${this.hasLeadingIcon ? this._leadingIconTemplate : ""}
