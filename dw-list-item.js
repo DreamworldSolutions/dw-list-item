@@ -52,6 +52,12 @@ export class DwListItem extends LitElement {
           --mdc-theme-on-surface: var(--mdc-theme-primary, #6200ee);
         }
 
+        :host([selected]) .primary-text,
+        :host([activated]) .primary-text,
+        :host([disabled]) .primary-text {
+          font-weight: 500;
+        }
+
         .list-item__icon {
           background-color: transparent;
           color: var(--dw-icon-color, rgba(0, 0, 0, 0.38));

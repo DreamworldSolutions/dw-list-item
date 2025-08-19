@@ -25,7 +25,7 @@
   "dependencies": {
     "@dreamworld/dw-ellipsis": "^1.2.7",
     "@dreamworld/dw-icon": "^4.1.0",
-    "@dreamworld/dw-ripple": "^3.1.0",
+    "@dreamworld/dw-ripple": "^3.1.7",
     "@dreamworld/material-styles": "^3.2.4",
     "@dreamworld/pwa-helpers": "^2.0.4",
     "@dreamworld/web-util": "^1.7.2",
