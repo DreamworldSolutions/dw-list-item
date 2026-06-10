@@ -22,9 +22,9 @@ export class DwListItem extends LitElement {
           display: flex;
           flex-direction: row;
           align-items: center;
-          height: 48px;
+          height: var(--dw-list-item-height, 48px);
           position: relative;
-          padding: 0 16px;
+          padding: var(--dw-list-item-padding, 0 16px);
           overflow: hidden;
           outline: none;
           cursor: pointer;
@@ -135,6 +135,17 @@ export class DwListItem extends LitElement {
           height: 60px;
         }
 
+        :host([compact]) {
+          height: var(--dw-list-item-height, 24px);
+          padding: 0 8px;
+          --mdc-icon-size: 16px;
+        }
+
+        :host([compact]) .primary-text,
+        :host([compact]) .secondary-text {
+          font-size: 12px;
+        }
+
         /* This is to show ripple on click.
          * By default "dw-ripple" sets relative position to the parent element which is not host element.
          * But it isn't sets relative position on the host element.
@@ -159,6 +170,12 @@ export class DwListItem extends LitElement {
           width: var(--mdc-icon-size, 20px);
           height: var(--mdc-icon-size, 20px);
           margin-right: 16px;
+        }
+
+        :host([compact][hasLeadingIcon]) .leading-icon-container {
+          width: var(--mdc-icon-size, 16px);
+          height: var(--mdc-icon-size, 16px);
+          margin-right: 8px;
         }
 
         /**
@@ -197,6 +214,12 @@ export class DwListItem extends LitElement {
        * Dense item will have less height compare to normal item
        */
       dense: { type: Boolean, reflect: true },
+
+      /**
+       * Input property
+       * Set to true to show compact item (24px height).
+       */
+      compact: { type: Boolean, reflect: true },
 
       /**
        * Input property
@@ -356,6 +379,7 @@ export class DwListItem extends LitElement {
 
     this.twoLine = false;
     this.dense = false;
+    this.compact = false;
     this.disabled = false;
     this.selectionMode = "default";
     this.selected = false;
