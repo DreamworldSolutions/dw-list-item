@@ -136,7 +136,7 @@ export class DwListItem extends LitElement {
         }
 
         :host([compact]) {
-          height: var(--dw-list-item-height, 24px);
+          height: var(--dw-list-item-compact-height, 24px);
           padding: 0 8px;
           --mdc-icon-size: 16px;
         }
